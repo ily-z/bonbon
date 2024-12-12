@@ -102,22 +102,34 @@ include "../conf/connection.php";
     <form action="" method="post">
       <div class="row">
       <div class="col-lg-3">
-          <input type="date" class="form-control" placeholder="tanggal awal">
+          <input type="date" class="form-control" placeholder="tanggal awal" name="tanggalawal">
           <div class="input-group">
           </div>
       </div>
       <div class="col-lg-3">
-          <input type="date" class="form-control" placeholder="tanggal akhir">
+          <input type="date" class="form-control" placeholder="tanggal akhir" name="tanggalakhir">
       </div>
               <button type="submit" class="btn btn-primary mt-4 m-2">lihat laporan Transaksi</button>
           </div>
       </div>
       </form>
 </div>
+<?php 
+if($_SERVER['REQUEST_METHOD']=='post'){
+    $tglawal=$_POST['tanggalawal'];
+    echo $tglawal;
+    $tglakhir=$_POST['tanggalakhir'];
+    $query="SELECT * FROM transaksi WHERE (status_transaksi= 'lunas') ";
+    $result=mysqli_query($connect,$query);
+    $data=mysqli_fetch_all($result,MYSQLI_ASSOC);
+    var_dump($data);
+}
+
+?>
 
     <!--Footer -->
     <div class="col-md-12 end-box ">
-         &copy; 2021 | All Rights Reserved | Barley Bakery and Cake
+         &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
     </div>
     <!-- /.col -->
     <!--Footer end -->
