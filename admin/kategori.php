@@ -38,6 +38,7 @@ include "../conf/connection.php";
                     <li><a href="pengguna.php">Pengguna</a></li>
                     <li class="active"><a href="kategori.php">Kategori</a></li>
                     <li><a href="barang.php">Barang</a></li>
+                    <li><a href="report.php">Laporan</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>

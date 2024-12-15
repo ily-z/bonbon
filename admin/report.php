@@ -5,6 +5,7 @@ if(empty($_SESSION['nama'])){ ?>
 $nama = $_SESSION['nama'];
 if($_SESSION['hak'] == 'admin'){}else{ ?> <script> alert('Anda Bukan Admin!'); window.location.href='../logout.php' </script> <?php } 
 include "../conf/connection.php";
+$show='none';
  ?>
 <!DOCTYPE html>
 <html>
@@ -34,11 +35,11 @@ include "../conf/connection.php";
             <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="home.php">Beranda</a></li>
+                    <li><a href="home.php">Beranda</a></li>
                     <li><a href="pengguna.php">Pengguna</a></li>
-                    <li><a href="kategori.php">Kategori</a></li>
+                    <li ><a href="kategori.php">Kategori</a></li>
                     <li><a href="barang.php">Barang</a></li>
-                    <li><a href="report.php">Laporan</a></li>
+                    <li class="active"><a href="report.php">Laporan</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>
@@ -49,61 +50,66 @@ include "../conf/connection.php";
         </div>
         <!-- /.container-fluid -->
     </nav>
-<div class="container">
-   <br><br>
-   <div class="page-header">
-   	<h2> Daftar Order </h2>
-   </div>
-   <table id="tables" class="table table-responsive table-bordered table-striped">
-   	<thead>
-   		<tr>
-   			<th style="text-align: center;"> Nama </th>
-   			<th style="text-align: center;"> Tanggal </th>
-   			<th style="text-align: center;"> Alamat Pengiriman</th>
-   			<th style="text-align: center;"> No Telepon </th>
-   			<th style="text-align: center;"> Status </th>
-   			<th style="text-align: center;"> Aksi </th>
-   		</tr>
-   	</thead>
-   	<?php
-   		$sql = "select * from pengguna inner join transaksi on pengguna.id_pengguna = transaksi.id_pengguna";
-   		$query = mysqli_query($connect, $sql);
-   		while ($data = mysqli_fetch_array($query)){ $status = $data['status_transaksi']; ?>
-   			<tr>
-   				<td><?php echo ucwords("$data[nama]"); ?></td>
-   				<td><?php echo ucwords("$data[waktu_transaksi]"); ?></td>
-   				<td><?php echo ucwords("$data[alamat]"); ?></td>
-   				<td><?php echo ucwords("$data[no_hp]"); ?></td>
-   				<td>
-	   				 <?php if($status == 'proses kirim'){ ?>
-	   					Menunggu Konfirmasi
-	   				 <?php }else if($status == 'dikirim'){ ?> 
-	   				 	Barang Dikirim 
-	   				 <?php }else if($status == 'lunas'){ ?> 
-	   				 	Lunas
-	   				 <?php } ?>
-   				</td>
-   				<td style="text-align: center;">
-   				 <?php if($status == 'proses kirim'){ ?>
-   					<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-primary">Lihat Barang</a>
-   				 <?php }else if($status == 'dikirim'){ ?> 
-   				 	<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-success">Lihat Barang</a>
-   				 <?php }else if($status == 'lunas'){ ?> 
-   				 	<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-warning">Lihat Barang</a>
-   				 <?php } ?>
-   				</td>
-   			</tr>
-   		<?php }
-   	?>
-   </table>
+    <br>
+    <div class="container">
+    <br><br>
+       <div class="page-header">
+           <h2> Laporan Keuangan </h2>
+       </div>
+       <div class="container">
+           <form action="report.php" method="POST">
+          <div class="row">
+              <div class="col-lg-3">
+              <label for="tglawal" class="form-lable">tanggal awal</label>
+              <input type="date" class="form-control" placeholder="tanggal awal" name="tanggalawal">
+          </div>
+          <div class="col-lg-3">
+            <label for="tglakhir" class="form-lable">tanggal akhir</label>
+              <input type="date" class="form-control" id="tglakhir" placeholder="tanggal akhir" name="tanggalakhir">
+          </div>
+                  <button type="submit" class="btn btn-primary mt-4 m-2">lihat laporan Transaksi</button>
+              </div>
+          </div>
+          </form>
+       </div>
+    </div>
+<?php 
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $tglawal=$_POST['tanggalawal'];
+    $tglakhir=$_POST['tanggalakhir'];
+    $query="SELECT * FROM transaksi WHERE (status_transaksi= 'lunas') AND (waktu_transaksi BETWEEN '$tglawal' AND '$tglakhir')";
+    $result=mysqli_query($connect,$query);
+    $data=mysqli_fetch_all($result,MYSQLI_ASSOC);
+    //var_dump($data);
+    $show='block';
+}
+?>
+    <div class="container">
+      
+<div style="display: <?= $show?>">
+       <table id="tables" class="table table-responsive table-bordered table-striped">
+           <thead>
+               <tr>
+                   <th style="text-align: center;"> Tanggal  </th>
+                   <th style="text-align: center;"> Subtotal </th>
+               </tr>
+           </thead>
+           <?php foreach($data as $dat):?>
+                   <tr>
+                       <td style="text-align: center;"><?= $dat['waktu_transaksi'] ?></td>
+                       <td style="text-align: center;"><?= $dat['subtotal'] ?></td>
+                   </tr>
+            <?php endforeach;?>
+       </table>
+    </div>
 </div>
 
-  <!-- <center><a href="cetak-order.php" class="btn btn-success" target="_BLANK">Cetak</a></center> -->
 
 
-    <!--Footer -->
+
+	<!--Footer -->
     <div class="col-md-12 end-box ">
-         &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
+         &copy; 2024 | All Rights Reserved | Bonbon Bakery and Cake
     </div>
     <!-- /.col -->
     <!--Footer end -->
