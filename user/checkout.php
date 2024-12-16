@@ -14,8 +14,8 @@ if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna
 	$alamat = $_POST['alamat'];
 	$no_hp = $_POST['no_hp'];
 	//get waktu
-	date_default_timezone_set('Asia/Jakarta');
-	$waktu = date('l, d-m-Y h:i:sa');
+	//date_default_timezone_set('Asia/Jakarta');
+	$waktu = date("y-m-d");
 
 	//update waktu dan status tabel keranjang
 	$count = count($_POST['id_keranjang']);

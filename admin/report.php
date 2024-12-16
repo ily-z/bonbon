@@ -44,6 +44,16 @@ function ambiltotal($array){
     }
     return $result;
 }
+
+function ambiltotalsemua($array){
+    $transaksi=count($array);
+    $total=0;
+    foreach($array as $data){
+        $total += $data['subtotal'];
+    }
+    return [$transaksi,$total];
+
+}
  ?>
 <!DOCTYPE html>
 <html>
@@ -111,7 +121,7 @@ function ambiltotal($array){
           </form>
        </div>
     </div>
-<tal?php 
+<?php 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $tglawal=$_POST['tanggalawal'];
     $tglakhir=$_POST['tanggalakhir'];
@@ -121,12 +131,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     //var_dump($data);
     $tabeldata=totalByDay( bindingarr($result));
     $show='block';
+    if(!isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
+        $_SESSION['tglawal']=$tglawal;
+        $_SESSION['tglakhir']=$tglakhir;
+    }
+}
+
+if(isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
+    $_POST['tanggalawal']=$_SESSION['tglawal'];
+    $_POST['tanggalakhir']=$_SESSION['tglakhir'];
+
 }
 ?>
     <div class="container">
-      
 <div style="display: <?= $show?>">
-    
     <div class="d-flex justify-content-center">
     
     <div class="w-65 p-3 ">
@@ -175,6 +193,27 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                    </tr>
             <?php endforeach;?>
        </table>
+
+       <table id="tables" class="table table-responsive table-bordered table-striped">
+           <thead>
+               <tr>
+                   <th style="text-align: center;"> total transaksi </th>
+                   <th style="text-align: center;"> total pendapatan </th>
+               </tr>
+           </thead>
+           <tr>
+               <td style="text-align: center;"><?= ambiltotalsemua($data)[0]?></td>
+               <td style="text-align: center;"><?= ambiltotalsemua($data)[1] ?></td>
+           </tr>
+       </table>
+    </div>
+
+    <div>
+        <form action="cetak-report.php" method="get">
+            <input type="hidden" value="<?= $tglawal?>" name="tanggalawal">
+            <input type="hidden" value="<?= $tglakhir?>" name="tanggalakhir">
+            <button type="submit" class="btn btn-primary">Cetak Report</button>
+        </form>
     </div>
 </div>
 
