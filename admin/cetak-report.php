@@ -116,7 +116,7 @@ function ambiltotalsemua($array){
         data: {
             labels: <?= json_encode( ambiltangal($tabeldata))?>,
             datasets: [{
-            label: '# of Votes',
+            label: 'pendapatan',
             data: <?= json_encode( ambiltotal($tabeldata))?>,
             borderWidth: 1
             }]

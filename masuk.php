@@ -101,7 +101,7 @@ include "conf/connection.php";
         </div>
 </div>
 <div class="col-md-12 end-box ">
-         &copy; 2021 | All Rights Reserved | Ndisan - Barley Bakery and Cake
+         &copy; 2024 | All Rights Reserved | Bonbon Bakery and Cake
     </div>
 </body>
 </html>

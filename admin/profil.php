@@ -16,7 +16,7 @@ $data = mysqli_fetch_array($query);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Barley Bakery and Cake </title>
+    <title> Bonbon Bakery and Cake </title>
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
@@ -25,6 +25,7 @@ $data = mysqli_fetch_array($query);
     <style>
         .flat{
             border-radius: 0px;
+        }
     </style>
 </head>
 <body><br><br><br>

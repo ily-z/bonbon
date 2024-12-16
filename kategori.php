@@ -16,7 +16,7 @@ include "conf/connection.php";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Barley Bakery and Cake </title>
+    <title> Bonbon Bakery and Cake </title>
     <link href="assets/ico/barley.jpeg" rel="shorcut icon">
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -25,6 +25,7 @@ include "conf/connection.php";
     <style>         
         .flat{
             border-radius: 0px;
+        }
     </style>
 </head>
 <body>
@@ -72,6 +73,7 @@ include "conf/connection.php";
                   <div id="get"></div>
                 </div><hr>
               <div class="row">
+
                 <?php
                     $kategori = $_GET['kategori'];
                     $page = (isset($_GET['page']))? $_GET['page'] : 1;
@@ -82,6 +84,7 @@ include "conf/connection.php";
                     $cek = mysqli_num_rows($query1);
                     if($cek > 0){
                     while ($row = mysqli_fetch_array($query1)){ ?>
+
                     <div class="col-md-4 text-center col-sm-6">
                         <div class="thumbnail">
                             <img src="<?php echo "images/product/$row[gambar]"; ?>" width="50%" height="30%">
@@ -144,7 +147,6 @@ include "conf/connection.php";
                         </li>
                     </ul>
                 </div>
-                <!-- /.div -->
                 <div>
                     <a class="list-group-item active">Kategori
                     </a>
@@ -158,10 +160,8 @@ include "conf/connection.php";
                         <?php } ?>
                     </ul>
                 </div>
-                <!-- /.div -->
                 <div>
-                    <a class="list-group-item active">Tentang
-                    </a>
+                    <a class="list-group-item active">Tentang</a>
                     <ul class="list-group">
                             <li class="list-group-item"><a href="pusat-bantuan.php">Pusat Bantuan</a></li>
                             <li class="list-group-item"><a href="maps.php">Maps</a></li>
@@ -188,7 +188,6 @@ include "conf/connection.php";
                         <?php } ?>
                     </ul>
                 </div>
-                <!-- /.div -->
               
             </div>
             <!-- /.col -->
