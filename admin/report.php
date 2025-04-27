@@ -131,13 +131,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     //var_dump($data);
     $tabeldata=totalByDay( bindingarr($result));
     $show='block';
-    if(!isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
+    if(isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
         $_SESSION['tglawal']=$tglawal;
         $_SESSION['tglakhir']=$tglakhir;
     }
 }
 
-if(isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
+if(!isset($_POST['tglawal'],$_POST['tglakhir'])){
     $_POST['tanggalawal']=$_SESSION['tglawal'];
     $_POST['tanggalakhir']=$_SESSION['tglakhir'];
 

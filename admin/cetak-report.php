@@ -103,7 +103,7 @@ function ambiltotalsemua($array){
     <div class="container">
 <div >
     <div class="d-flex justify-content-center">
-    <div class="w-65 p-3" width="70%"> 
+    <div class="w-65 p-3" width="60%"> 
         <div>
         <canvas id="myChart"></canvas>
         </div>
