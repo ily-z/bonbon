@@ -75,20 +75,20 @@ include "../conf/connection.php";
    				<td><?php echo ucwords("$data[alamat]"); ?></td>
    				<td><?php echo ucwords("$data[no_hp]"); ?></td>
    				<td>
-	   				 <?php if($status == 'proses kirim'){ ?>
+	   				 <?php if($status == 'diproses'){ ?>
 	   					Menunggu Konfirmasi
 	   				 <?php }else if($status == 'dikirim'){ ?> 
 	   				 	Barang Dikirim 
-	   				 <?php }else if($status == 'lunas'){ ?> 
+	   				 <?php }else if($status == 'selesai'){ ?> 
 	   				 	Lunas
 	   				 <?php } ?>
    				</td>
    				<td style="text-align: center;">
-   				 <?php if($status == 'proses kirim'){ ?>
+   				 <?php if($status == 'diproses'){ ?>
    					<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-primary">Lihat Barang</a>
    				 <?php }else if($status == 'dikirim'){ ?> 
    				 	<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-success">Lihat Barang</a>
-   				 <?php }else if($status == 'lunas'){ ?> 
+   				 <?php }else if($status == 'selesai'){ ?> 
    				 	<a href="lihat-barang.php?id_transaksi=<?php echo "$data[id_transaksi]"; ?>" class="btn btn-warning">Lihat Barang</a>
    				 <?php } ?>
    				</td>
