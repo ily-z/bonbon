@@ -12,7 +12,7 @@ include "../conf/connection.php";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bonbon Bakery and Cake </title>
+    <title> Barley Bakery and Cake </title>
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
@@ -129,7 +129,7 @@ error_reporting(0);
     <!--Footer -->
    
 <div class="col-md-12 end-box">
-        &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
+        &copy; 2021 | All Rights Reserved | Ndisan - Barley Bakery and Cake
     </div>
 
     <!--jQUERY FILES-->
