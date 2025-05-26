@@ -6,10 +6,11 @@ include "conf/connection.php";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bonbon Bakery and Cake </title>
+    <title> Bonbon Bakery and Cakes</title>
     <link href="assets/ico/barley.jpeg" rel="shortcut icon">
     <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stye" href="assets/js/bootstrap.min.js">
      <!-- custom CSS here -->
     <link href="assets/css/style.css" rel="stylesheet" />
     <style>
@@ -19,6 +20,33 @@ include "conf/connection.php";
     </style>
 </head>
 <body>
+ <header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2">Login</button>
+          <button type="button" class="btn btn-warning">Sign-up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -61,29 +89,37 @@ include "conf/connection.php";
                   <div id="get"></div>
                 </div><hr>
               <div class="row">
+
                 <?php
+
                     $page = (isset($_GET['page']))? $_GET['page'] : 1;
                     $limit = 9;
                     $limit_start = ($page - 1) * $limit;
                     $sql1 = "select * from barang LIMIT $limit_start, $limit";
                     $query1 = mysqli_query($connect,$sql1);
                     $cek = mysqli_num_rows($query1);
+
                     if($cek > 0){
-                    while ($row = mysqli_fetch_array($query1)){ ?>
+                        while ($row = mysqli_fetch_array($query1)){ 
+                ?>
+
                     <div class="col-md-4 text-center col-sm-6">
                         <div class="thumbnail">
-                            <img src="<?php echo "images/product/$row[gambar]"; ?>" width="50%" height="30%">
+                            <img src="<?="images/product/$row[gambar]" ?>" width="50%" height="30%">
                             <div class="caption">
                                 <h4><?php echo ucwords("$row[nama_barang]"); ?> <span class="badge"><?php echo "$row[stok]"; ?></span></h4>
-                                <p style="color: red;">Rp. <?php echo number_format("$row[harga]") ?> </p>
+                                <p style="color: red;">Rp. <?= number_format("$row[harga]") ?> </p>
                             </div>
                         </div>
                     </div>
-                    <!-- /.col -->
-                <?php }
-                }else{ ?>
+                    
+                <?php 
+                    } // end while
+                }else{ 
+                    ?>
                     <center><img src="assets/ico/kosong.png"><h2>Barang Tidak Tersedia!!</h2></center>
-                <?php } ?>
+                <?php } 
+                ?>
                 </div>
 
             <center>
@@ -202,5 +238,6 @@ include "conf/connection.php";
     <script src="assets/js/animatescroll.js"></script>
     <!-- HOVER IMAGE EFFECT -->
     <script src="assets/js/hover.image.effect.js"></script>
+    ?>
 </body>
 </html>
