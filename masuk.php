@@ -44,8 +44,8 @@
       background: transparent;
     }
     .container-auth {
-      width: 1000px;
-      height: 600px;
+      width: 800px;
+      height: 500px;
       background: transparent;
       border-radius: 30px;
       overflow: hidden;
@@ -57,7 +57,7 @@
       top: 0;
       height: 100%;
       width: 50%;
-      padding: 70px 60px;
+      padding: 50px 40px;
       transition: all 0.6s ease-in-out;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(14px);
@@ -67,15 +67,15 @@
     }
     .form-container h2 {
       font-family: 'Sansita Swashed', cursive;
-      font-size: 2.4rem;
+      font-size: 2rem;
     }
     .form-control {
       background-color: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.4);
       color: white;
       border-radius: 25px;
-      font-size: 1.1rem;
-      padding: 12px 18px;
+      font-size: 0.95rem;
+      padding: 10px 15px;
     }
     select.form-control option {
       background-color: #333;
@@ -154,6 +154,13 @@
     }
     .overlay-panel img {
       margin-bottom: 5px;
+      width: 150px;
+    }
+    .overlay-panel h3 {
+      font-size: 1.5rem;
+    }
+    .overlay-panel p {
+      font-size: 0.9rem;
     }
     .overlay-left {
       transform: translateX(-20%);
@@ -186,13 +193,13 @@
       margin-bottom: 20px;
     }
     .social-icons a {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: white;
       border: 1px solid white;
       border-radius: 50%;
-      padding: 10px;
-      width: 42px;
-      height: 42px;
+      padding: 8px;
+      width: 36px;
+      height: 36px;
       display: flex;
       justify-content: center;
       align-items: center;
