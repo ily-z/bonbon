@@ -214,7 +214,7 @@ include "../conf/connection.php";
     </div>
     <?php } else { ?>
       <div class="text-center">
-        <img src="../assets/ico/kosong.png" width="180">
+        <img src="../assets/ico/keranjang.png" width="180">
         <h3 class="mt-3">Belum ada barang di keranjang.</h3>
       </div>
     <?php } ?>
