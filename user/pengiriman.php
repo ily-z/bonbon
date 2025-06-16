@@ -209,7 +209,7 @@ include "../conf/connection.php";
           <div class="col-md-2"><?php echo date("d-m-Y", strtotime($data['waktu_transaksi'])); ?></div>
           <div class="col-md-3"><?php echo ucwords($data['alamat']); ?></div>
           <div class="col-md-2"><?php echo $data['no_hp']; ?></div>
-          <div class="col-md-2">
+          <div class="col-md-2 d-flex justify-content-center">
             <span class="status-badge <?php echo $status_class; ?>">
               <?php echo $status_text; ?>
             </span>
@@ -230,7 +230,7 @@ include "../conf/connection.php";
     </div>
     <?php } else { ?>
       <div class="text-center">
-        <img src="../assets/ico/kosong.png" width="180">
+        <img src="../assets/ico/keranjang.png" width="180">
         <h3 class="mt-3">Belum Ada Barang Yang Dikirim</h3>
       </div>
     <?php } ?>

@@ -8,9 +8,9 @@ if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna
 include "../conf/connection.php";
  ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Barley Bakery and Cake </title>
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">

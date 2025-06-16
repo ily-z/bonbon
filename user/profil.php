@@ -11,9 +11,9 @@ $query = mysqli_query($connect, $sql);
 $data = mysqli_fetch_array($query);
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Bonbon Bakery and Cake </title>
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">

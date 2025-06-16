@@ -1,51 +1,106 @@
-<?php session_start();
+<?php 
+session_start();
 if(empty($_SESSION['nama'])){ ?>
     <script> window.location.href='../index.php' </script>
 <?php }
-if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script> <?php } ?>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Barley Bakery and Cake </title>
-<link href="../assets/ico/barley.jpeg" rel="shorcut icon">
-<link href="../assets/css/bootstrap.css" rel="stylesheet">
-<?php
-	include "../conf/connection.php";
-	$id_pengguna = $_SESSION['id'];
-	$subtotal = $_POST['sub'];
-	$alamat = $_POST['alamat'];
-	$no_hp = $_POST['no_hp'];
-	//get waktu
-	//date_default_timezone_set('Asia/Jakarta');
-	$waktu = date("y-m-d");
+if($_SESSION['hak'] != 'pengguna'){ ?>
+    <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script>
+<?php }
+include "../conf/connection.php";
 
-	//update waktu dan status tabel keranjang
-	$count = count($_POST['id_keranjang']);
-	for($i=0; $i<$count; $i++){
-		$a = "update keranjang set waktu='$waktu',status='proses kirim' where id_keranjang='".$_POST["id_keranjang"][$i]."'";
-		$b = mysqli_query($connect, $a);
-	}
+$id_pengguna = $_SESSION['id'];
+$subtotal = $_POST['sub'];
+$alamat = $_POST['alamat'];
+$no_hp = $_POST['no_hp'];
+$waktu = date("Y-m-d");
 
-	//insert tabel transaksi
-	$c = "insert into transaksi (waktu_transaksi,subtotal,status_transaksi,alamat,no_hp,id_pengguna) values ('$waktu','$subtotal','proses kirim','$alamat','$no_hp','$id_pengguna')";
-	$d = mysqli_query($connect, $c);
+// Simpan transaksi
+$insert = "INSERT INTO transaksi (waktu_transaksi, subtotal, status_transaksi, alamat, no_hp, id_pengguna) 
+           VALUES ('$waktu', '$subtotal', 'proses kirim', '$alamat', '$no_hp', '$id_pengguna')";
+$sukses = mysqli_query($connect, $insert);
 
-	if($d){ ?>
-		<div class="container my-5 py-5">
-  <div class="text-center p-5 rounded" style="background-color: #fff3e0; border: 2px dashed #c9aa7b;">
-    <h2 style="font-family: 'Sansita Swashed', cursive; color: #ad8d5c; font-size: 2rem;">
-      Barang Anda Akan Segera Dikirim
-    </h2>
-    <p class="mt-3" style="font-family: 'Sora', sans-serif; font-size: 1.05rem;">
-      Pesanan Anda akan segera dikonfirmasi oleh admin.<br>
-      Untuk melihat status pengiriman, tekan ikon 
-      <i class="bi bi-send-fill text-primary"></i> pada navbar.<br><br>
-      Lakukan pembayaran kepada kurir kami saat barang sampai.<br>
-      Jika sudah menerima barang, tekan tombol 
-      <span class="badge bg-primary">Barang Diterima</span> di menu <strong>Pengiriman</strong>.
-    </p>
-    <a href="pengiriman.php" class="btn btn-warning btn-lg mt-4 px-4 py-2 fw-bold" style="font-family: 'Sora', sans-serif;">OK</a>
-  </div>
-</div>
-<?php } else {
-  echo "<script> alert('Terjadi Kesalahan'); window.location.href='keranjang.php' </script>";
-	}
+// Ambil ID transaksi yang baru saja disimpan
+$id_transaksi_baru = mysqli_insert_id($connect);
+
+// Update status dan waktu keranjang dengan ID transaksi
+if (isset($_POST['id_keranjang'])) {
+    for($i=0; $i<count($_POST['id_keranjang']); $i++){
+        $id_keranjang = $_POST['id_keranjang'][$i];
+        $a = "UPDATE keranjang SET waktu='$waktu', status='proses kirim', id_transaksi='$id_transaksi_baru' WHERE id_keranjang='$id_keranjang'";
+        mysqli_query($connect, $a);
+    }
+}
 ?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Sukses | Bonbon Bakery</title>
+  <link rel="shortcut icon" href="../assets/ico/barley.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&family=Sora&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f3e3cd;
+      font-family: 'Sora', sans-serif;
+    }
+    .success-card {
+      background-color: #fff3e0;
+      border: 2px dashed #c9aa7b;
+      padding: 50px;
+      margin: 100px auto;
+      max-width: 700px;
+      border-radius: 20px;
+      text-align: center;
+    }
+    .success-card h2 {
+      font-family: 'Sansita Swashed', cursive;
+      color: #ad8d5c;
+      font-size: 2rem;
+    }
+    .success-card p {
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+    .btn-ok {
+      background-color: #c9aa7b;
+      color: white;
+      font-weight: bold;
+      font-family: 'Sora', sans-serif;
+      padding: 10px 30px;
+      font-size: 1rem;
+      border-radius: 30px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<?php if ($sukses) { ?>
+  <div class="container">
+    <div class="success-card shadow-lg">
+      <h2><i class="bi bi-check-circle-fill text-success"></i> Barang Anda Akan Segera Dikirim</h2>
+      <p>
+        Pesanan Anda telah berhasil dikonfirmasi.<br>
+        Silakan cek status pengiriman melalui menu 
+        <i class="bi bi-send-fill text-primary"></i> <strong>Pengiriman</strong> pada navbar.<br><br>
+        Lakukan pembayaran saat barang diterima kepada kurir kami.<br>
+        Setelah barang diterima, klik tombol 
+        <span class="badge bg-primary">Barang Diterima</span> di halaman pengiriman.
+      </p>
+      <a href="pengiriman.php" class="btn btn-ok">OK</a>
+    </div>
+  </div>
+<?php } else { ?>
+  <script>
+    alert("Terjadi kesalahan saat melakukan checkout.");
+    window.location.href = "keranjang.php";
+  </script>
+<?php } ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
