@@ -3,209 +3,289 @@ if(empty($_SESSION['nama'])){ ?>
     <script> window.location.href='../index.php' </script>
 <?php }
 $nama = $_SESSION['nama'];
-if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script> <?php } 
+if($_SESSION['hak'] != 'pengguna'){ ?>
+    <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script>
+<?php } 
 include "../conf/connection.php";
- ?>
+
+// Ambil nama kategori
+$kategori = $_GET['kategori'];
+$query_kategori = mysqli_query($connect, "SELECT kategori FROM kategori WHERE id_kategori='$kategori'");
+$nama_kategori = mysqli_fetch_array($query_kategori)['kategori'];
+?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bonbon Bakery and Cake </title>
-    <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
-    <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-     <!-- custom CSS here -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kategori <?php echo $nama_kategori; ?> | Bonbon Bakery and Cake</title>
+  <link rel="shortcut icon" href="../assets/ico/barley.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&family=Sora&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Sora', sans-serif;
+      background-color: #f3e3cd;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #C9AA7B;
+    }
+    .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+      font-weight: bold;
+    }
+    .sidebar {
+      background-color: #AD8D5C;
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      margin-bottom: 20px;
+    }
+    .sidebar h5 {
+      margin-top: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 5px;
+      font-family: 'Sansita Swashed', cursive;
+      font-size: 1.3rem;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+    .product-box {
+      background: url('../images/content/dark-texture-produk.png') center/cover no-repeat;
+      color: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .product-box img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .product-box button {
+      background-color: #C9AA7B;
+      border: none;
+      padding: 8px 12px;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+    }
+    .product-box form {
+      position: relative;
+    }
+    .product-box .form-control[type=number] {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    .price-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .info-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .form-control[type=number] {
+      background-color: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+    }
+    .form-control[type=number]::placeholder {
+      color: white;
+    }
+    .form-control[type=number]:focus {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .pagination {
+      justify-content: center;
+    }
+    .pagination .page-link {
+      color: #C9AA7B;
+      font-weight: bold;
+    }
+    .pagination .active .page-link {
+      background-color: #C9AA7B;
+      border-color: #C9AA7B;
+      color: white;
+    }
+    .section-title {
+      font-family: 'Sansita Swashed', cursive;
+      font-size: 2rem;
+      margin: 30px 0;
+    }
+    .new-product {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+    .new-product:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+    }
+    .new-product img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .new-product .info {
+      flex-grow: 1;
+    }
+    .new-product .info span {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
+    }
+    .new-product .info strong {
+      display: block;
+      font-size: 0.85rem;
+    }
+    .new-product a {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="home.php">Beranda</a></li>
-                    <li><a href="member.php">Member</a></li>
-                    <li><a href="keranjang.php" title="Keranjang Belanja"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>                    
-                    <li><a href="pengiriman.php" title="Pengiriman"><span class="glyphicon glyphicon-send"></span></a></li>
-                    <li><a href="riwayat.php" title="Riwayat Transaksi"><span class="glyphicon glyphicon-list-alt"></span></a></li>
-                </ul>
-                <ul class='nav navbar-nav navbar-right'>
-                    <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>
-                    <li><a href="../logout.php">Keluar</a></li>
-                </ul/>
-           </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-<br><br><br><br>
-    <div class="container">
-      
-        <div class="row">
 
-            <div class="col-md-9">
-                    
-              <div class="jumbotron">
-                  <h1> Barley Bakery and Cake <img src="../assets/ico/barley.jpeg" width="20%" height="20%"></h1>
-                  <p>
-                    Belanja kue impian anda secara online, aman dan nyaman di Barley Bakery and Cake.
-                  </p><br><br><br>
-                  <p>
-                    <a href="#" onclick="$('#get').animatescroll({scrollSpeed:2000,easing:'easeOutBack'});" class="btn btn-primary btn-lg">Mulai</a>
-                  </p>
-                  <div id="get"></div>
-                </div><hr>
-              <div class="row">
-                <?php
-                    $kategori = $_GET['kategori'];
-                    $page = (isset($_GET['page']))? $_GET['page'] : 1;
-                    $limit = 9;
-                    $limit_start = ($page - 1) * $limit;
-                    $sql1 = "select * from barang where id_kategori='$kategori' LIMIT $limit_start, $limit";
-                    $query1 = mysqli_query($connect,$sql1);
-                    $cek = mysqli_num_rows($query1);
-                    if($cek > 0){
-                    while ($row = mysqli_fetch_array($query1)){ ?>
-                    <div class="col-md-4 text-center col-sm-6">
-                        <div class="thumbnail">
-                            <img src="<?php echo "../images/product/$row[gambar]"; ?>" width="50%" height="30%">
-                            <div class="caption">
-                                <h4><?php echo ucwords("$row[nama_barang]"); ?> <span class="badge"><?php echo "$row[stok]"; ?></span></h4>
-                                <p style="color: red;">Rp. <?php echo number_format("$row[harga]") ?> </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                <?php } 
-                }else{ ?>
-                    <center><img src="../assets/ico/kosong.png"><h2>Barang Tidak Tersedia!!</h2></center>
-                <?php } ?>
-                </div>
+<?php include "navbar.php"; ?>
 
-            <center>
-                <!-- /.row -->
-                <div class="row">
-                    <ul class="pagination">
-                    <!-- LINK NUMBER -->
-                    <?php
-                    // Buat query untuk menghitung semua jumlah data
-                    $q2 = "select * from barang where id_kategori='$kategori'";
-                    $sql2 = mysqli_query($connect, $q2); // Eksekusi querynya
-                    $get_jumlah = mysqli_num_rows($sql2);
-                    
-                    $jumlah_page = ceil($get_jumlah / $limit); // Hitung jumlah halamannya
-                    $jumlah_number = 3; // Tentukan jumlah link number sebelum dan sesudah page yang aktif
-                    $start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number
-                    $end_number = ($page < ($jumlah_page - $jumlah_number))? $page + $jumlah_number : $jumlah_page; // Untuk akhir link number
-                    
-                    for($i = $start_number; $i <= $end_number; $i++){
-                      $link_active = ($page == $i)? ' class="active"' : '';
-                    ?>
-                      <li<?php echo $link_active; ?>><a href="home.php?page=<?php echo $i; ?>&kategori=<?php echo "$kategori"; ?>"><?php echo $i; ?></a></li>
-                    <?php
-                    }
-                   ?>
-                    </ul>
-                </div>
-                <!-- /.row -->
-            </center>
-            <!-- /.col -->
-        </div>
-
-            <div class="col-md-3">
-                <div>
-                    <a class="list-group-item active ">Pencarian
-                    </a>
-                    <ul class="list-group">
-
-                        <li class="list-group-item">
-                            <form  action="search.php" method="POST">
-                                <div class="col-md-9">
-                                <input type="text" name="cari" class="form-control" placeholder="Telusuri.."><br>
-                                </div>
-                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.div -->
-                <div>
-                    <a class="list-group-item active">Kategori
-                    </a>
-                    <ul class="list-group">
-                        <?php
-                        include "../conf/connection.php";
-                        $sql = "select * from kategori";
-                        $query = mysqli_query($connect,$sql);
-                        while ($data = mysqli_fetch_array($query)){ ?>
-                            <li class="list-group-item"><a href="kategori.php?kategori=<?php echo "$data[id_kategori]"; ?>"><?php echo "$data[kategori]"; ?></a></li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <!-- /.div -->
-                <div>
-                    <a class="list-group-item active">Tentang
-                    </a>
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="costumer-service.php">Layanan Pelanggan</a></li>
-                            <li class="list-group-item"><a href="pusat-bantuan.php">Pusat Bantuan</a></li>
-                            <li class="list-group-item"><a href="maps.php">Maps</a></li>
-                            <li class="list-group-item"><a href="panduan-pengguna.php">Panduan Pengguna</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <a class="list-group-item active">Produk Baru
-                    </a>
-                    <ul class="list-group">
-                        <?php
-                            $a = "select * from barang order by id_barang desc limit 2";
-                            $b = mysqli_query($connect,$a);
-                            while ($c = mysqli_fetch_array($b)){ ?>
-                            <li class="list-group-item">
-                                <div class="thumbnaill">
-                                    <div class="captionn">
-                                        <h4><?php echo "$c[nama_barang]"; ?> <span class="badge"><?php echo "$c[stok]"; ?></span></h4>
-                                        <p>Rp. <?php echo "$c[harga]" ?> </p>
-                                    </div>
-                                    <center><img src="<?php echo "../images/product/$c[gambar]"; ?>" width="70%" height="40%"/></center>
-                                </div>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <!-- /.div -->
-              
-            </div>
-            <!-- /.col -->
-
-            </div>
-        <!-- /.row -->
+<div class="container mt-4">
+  <h2 class="text-center section-title" style="font-family: 'Sansita Swashed', cursive; font-size: 2rem; margin: 30px 0;">
+    Kategori <?php echo htmlspecialchars($nama_kategori); ?> <i class="bi bi-cake2-fill text-warning"></i>
+  </h2>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar" style="background-color: #AD8D5C; padding: 20px; border-radius: 10px; color: white;">
+        <form action="search.php" method="GET" class="mb-3">
+          <input type="text" name="cari" class="form-control" placeholder="Cari produk...">
+        </form>
+        <h5 style="margin-top: 20px; font-weight: bold; border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 5px; font-family: 'Sansita Swashed', cursive; font-size: 1.3rem;">Kategori</h5>
+        <ul class="list-unstyled">
+        <?php $sql = "select * from kategori";
+              $query = mysqli_query($connect,$sql);
+              while ($data = mysqli_fetch_array($query)){
+                echo "<li><a href='kategori.php?kategori={$data['id_kategori']}' class='text-white text-decoration-none d-block mb-2'>".htmlspecialchars($data['kategori'])."</a></li>";
+              } ?>
+        </ul>
+        <h5 class="mt-4" style="font-family: 'Sansita Swashed', cursive; font-size: 1.3rem;">Tentang</h5>
+        <ul class="list-unstyled">
+          <li><a href="costumer-service.php" class="text-white text-decoration-none d-block mb-2">Layanan Pelanggan</a></li>
+          <li><a href="pusat-bantuan.php" class="text-white text-decoration-none d-block mb-2">Pusat Bantuan</a></li>
+          <li><a href="maps.php" class="text-white text-decoration-none d-block mb-2">Maps</a></li>
+          <li><a href="panduan-pengguna.php" class="text-white text-decoration-none d-block mb-2">Panduan Pengguna</a></li>
+        </ul>
+        <h5 class="mt-4" style="font-family: 'Sansita Swashed', cursive; font-size: 1.3rem;">Produk Baru</h5>
+        <?php
+        $new = mysqli_query($connect, "SELECT * FROM barang ORDER BY id_barang DESC LIMIT 2");
+        while($item = mysqli_fetch_array($new)) {
+          echo "<a href='detail-produk.php?id={$item['id_barang']}' class='new-product d-flex align-items-center text-white text-decoration-none mb-3' style='background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;'>
+                  <img src='../images/product/{$item['gambar']}' alt='{$item['nama_barang']}' style='width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-right: 10px;'>
+                  <div>
+                    <div>{$item['nama_barang']}</div>
+                    <strong>Rp ".number_format($item['harga'])."</strong>
+                  </div>
+                </a>";
+        }
+        ?>
+      </div>
     </div>
-    <!-- /.container -->
-    
-    <!--Footer -->
-   
-    <div class="col-md-12 end-box ">
-        &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
+    <div class="col-md-9">
+      <div class="row">
+        <?php
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 9;
+        $offset = ($page - 1) * $limit;
+        $produk = mysqli_query($connect, "SELECT * FROM barang WHERE id_kategori='$kategori' LIMIT $offset,$limit");
+        if(mysqli_num_rows($produk) > 0) {
+          while($row = mysqli_fetch_array($produk)) {
+        ?>
+        <div class="col-md-4">
+          <div class="product-box">
+            <img src="../images/product/<?php echo $row['gambar']; ?>">
+            <h5 class="mt-2"><?php echo ucwords($row['nama_barang']); ?></h5>
+            <div class="price-info mb-2">
+              <span>Rp <?php echo number_format($row['harga']); ?></span>
+              <a href="detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
+            </div>
+            <form method="POST" action="simpan-keranjang.php" class="d-flex align-items-center gap-2 mt-auto">
+              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
+              <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
+              <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
+              <input type="number" name="jumlah" class="form-control form-control-sm me-2"
+                     style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                     value="1" min="1" max="<?php echo $row['stok']; ?>" required>
+              <button type="submit" class="btn btn-sm" style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
+            </form>
+          </div>
+        </div>
+        <?php }} else { echo "<div class='text-center'><h4>Produk tidak ditemukan!</h4></div>"; } ?>
+      </div>
+
+      <!-- Custom Pagination -->
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <?php
+          $total = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM barang WHERE id_kategori='$kategori'"));
+          $pages = ceil($total / $limit);
+          $show = 3; // Tampilkan hanya 3 page
+          $start = max(1, $page - 1);
+          $end = min($pages, $start + $show - 1);
+
+          if ($start > 1) {
+            echo "<li class='page-item'><a class='page-link' href='kategori.php?kategori=$kategori&page=".($start - 1)."'><<</a></li>";
+          }
+
+          for ($i = $start; $i <= $end; $i++) {
+            $active = ($i == $page) ? 'active' : '';
+            echo "<li class='page-item $active'><a class='page-link' href='kategori.php?kategori=$kategori&page=$i'>$i</a></li>";
+          }
+
+          if ($end < $pages) {
+            echo "<li class='page-item'><a class='page-link' href='kategori.php?kategori=$kategori&page=".($end + 1)."'>>></a></li>";
+          }
+          ?>
+        </ul>
+      </nav>
     </div>
-    <!-- /.col -->
-    <!--Footer end -->
-    <!--jQUERY FILES-->
-    <script src="../assets/js/jquery-1.10.2.js"></script>
-    <!--BOOTSTRAP  FILES-->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- ANIMATE SCROLL -->
-    <script src="../assets/js/animatescroll.js"></script>
-    <!-- HOVER IMAGE EFFECT -->
-    <script src="../assets/js/hover.image.effect.js"></script>
+  </div>
+</div>
+
+<?php include "footer.php"; ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

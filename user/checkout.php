@@ -29,14 +29,23 @@ if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna
 	$d = mysqli_query($connect, $c);
 
 	if($d){ ?>
-		<div class="container">
-			<br><br><center><h2>Barang Akan Dikirim Setelah Dikonfirmasi Oleh Admin</h2>
-			<h4>Tekan icon <span class="glyphicon glyphicon-send"></span> di navbar untuk melihat daftar barang yang sudah dikirim. <br><br>
-			Lakukan pembayaran kepada kurir kami saat barang yang anda beli sudah sampai.<br><br>
-			Tekan tombol <a class="btn btn-primary">Barang Diterima</a> di menu pengiriman jika anda sudah menerima barang yang anda beli</h4><br><br>
-			<a href="pengiriman.php" class="btn btn-warning btn-lg">OK</a></center>
-		</div>
-	<?php }else{
-		echo "<script> alert('Terjadi Kesalahan'); window.location.href='keranjang.php' </script>";
+		<div class="container my-5 py-5">
+  <div class="text-center p-5 rounded" style="background-color: #fff3e0; border: 2px dashed #c9aa7b;">
+    <h2 style="font-family: 'Sansita Swashed', cursive; color: #ad8d5c; font-size: 2rem;">
+      Barang Anda Akan Segera Dikirim
+    </h2>
+    <p class="mt-3" style="font-family: 'Sora', sans-serif; font-size: 1.05rem;">
+      Pesanan Anda akan segera dikonfirmasi oleh admin.<br>
+      Untuk melihat status pengiriman, tekan ikon 
+      <i class="bi bi-send-fill text-primary"></i> pada navbar.<br><br>
+      Lakukan pembayaran kepada kurir kami saat barang sampai.<br>
+      Jika sudah menerima barang, tekan tombol 
+      <span class="badge bg-primary">Barang Diterima</span> di menu <strong>Pengiriman</strong>.
+    </p>
+    <a href="pengiriman.php" class="btn btn-warning btn-lg mt-4 px-4 py-2 fw-bold" style="font-family: 'Sora', sans-serif;">OK</a>
+  </div>
+</div>
+<?php } else {
+  echo "<script> alert('Terjadi Kesalahan'); window.location.href='keranjang.php' </script>";
 	}
 ?>

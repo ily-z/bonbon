@@ -1,107 +1,306 @@
-<?php session_start();
-
- 
-include "conf/connection.php";
- ?>
-
-<html>
+<?php session_start(); include "conf/connection.php"; ?>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> Masuk </title>
-    <link href="assets/ico/barley.jpeg" rel="shorcut icon">
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-     <!-- custom CSS here -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <style>
-    	.flat{
-    		border-radius: 0px;
-    	}
-	</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autentikasi | Bonbon Bakery and Cake</title>
+  <link rel="shortcut icon" href="assets/ico/barley.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&family=Sora&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    body {
+      position: relative;
+      margin: 0;
+      height: 100vh;
+      font-family: 'Sora', sans-serif;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0,0,0,0.4)), url('images/content/background.jpg') center/cover no-repeat;
+      z-index: -2;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      backdrop-filter: none;
+      z-index: -1;
+    }
+    body, html {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+    }
+    .container-auth {
+      width: 1000px;
+      height: 600px;
+      background: transparent;
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      position: relative;
+    }
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      padding: 70px 60px;
+      transition: all 0.6s ease-in-out;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(14px);
+      color: white;
+      border-radius: 30px;
+      text-align: center;
+    }
+    .form-container h2 {
+      font-family: 'Sansita Swashed', cursive;
+      font-size: 2.4rem;
+    }
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      padding: 12px 18px;
+    }
+    select.form-control option {
+      background-color: #333;
+      color: white;
+    }
+    .form-control:focus {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+      border-color: white;
+      box-shadow: none;
+    }
+    .form-control::placeholder {
+      color: #eee;
+    }
+    .form-control[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+    .sign-in-container {
+      left: 0;
+      z-index: 2;
+    }
+    .sign-up-container {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+    .container-auth.active .sign-up-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+    .container-auth.active .sign-in-container {
+      transform: translateX(100%);
+      opacity: 0;
+      z-index: 1;
+    }
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+      z-index: 100;
+    }
+    .container-auth.active .overlay-container {
+      transform: translateX(-100%);
+    }
+    .overlay {
+      background: linear-gradient(135deg, #E88C00, #F4AE44, #C9AA7B);
+      color: white;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+    .container-auth.active .overlay {
+      transform: translateX(50%);
+    }
+    .overlay-panel {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+      text-align: center;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      transition: all 0.6s ease-in-out;
+    }
+    .overlay-panel img {
+      margin-bottom: 5px;
+    }
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+    .container-auth.active .overlay-left {
+      transform: translateX(0);
+    }
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+    .container-auth.active .overlay-right {
+      transform: translateX(20%);
+    }
+    .btn-outline-light {
+      border: 2px solid white;
+      color: white;
+      font-size: 1rem;
+      border-radius: 30px;
+      padding: 10px 24px;
+    }
+    .btn-outline-light:hover {
+      background: white;
+      color: black;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .social-icons a {
+      font-size: 1.6rem;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      padding: 10px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+    }
+    .social-icons a:hover {
+      background: white;
+      color: #C9AA7B;
+    }
+  </style>
 </head>
-<body style="background: #ccc;">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+<body>
+<?php
+if (isset($_POST['login'])) {
+  $user = $_POST['user'];
+  $pass = $_POST['pass'];
+  $sql = "SELECT * FROM pengguna WHERE username='$user' AND password='$pass'";
+  $query = mysqli_query($connect, $sql);
+  $data = mysqli_fetch_array($query);
+  $cek = mysqli_num_rows($query);
+  $nama = $data['nama'] ?? null;
+  $hak = $data['hak'] ?? null;
+  $id = $data['id_pengguna'] ?? null;
+  if ($cek > 0) {
+    $_SESSION['nama'] = $nama;
+    $_SESSION['hak'] = $hak;
+    $_SESSION['id'] = $id;
+    echo "<script>window.location.href='" . ($hak == 'admin' ? 'admin/home.php' : 'user/home.php') . "';</script>";
+  } else {
+    echo '<div class="alert alert-danger mt-2 position-absolute top-0 start-50 translate-middle-x">Login gagal!</div>';
+  }
+}
 
-                </button>
-                <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.php">Beranda</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <br><br><br>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-4">
-		</div>
-		<div class="col-sm-4">
-		<h2 class="page-header">Masuk</h2>
-			<form method="POST">
-				<div class="form-group">
-					<label>Nama Pengguna</label><br>
-					<input type="text" class="form-control flat" name="user" placeholder="Nama Pengguna" maxlength="30" required/><br>
-					<label>Kata Sandi</label><br>
-					<input type="password" class="form-control flat" name="pass" placeholder="Kata Sandi" maxlength="20" required/>
-					<br>
-					<button class="btn btn-warning flat" type="submit" name="login">Masuk</button> Atau <a href="daftar.php" class="btn btn-default flat">Daftar</a>
-				</div>	
-			</form>
-			<?php
-			if(isset($_POST['login'])){
-				$user = $_POST['user'];
-				$pass = $_POST['pass'];
-				$sql = "select * from pengguna where username='$user' and password='$pass'";
-				$query = mysqli_query($connect, $sql);
-				$data = mysqli_fetch_array($query);
-				$cek = mysqli_num_rows($query);
-				$nama = $data['nama'] ?? null;
-				$hak = $data['hak'] ?? null;
-				$id = $data['id_pengguna'] ?? null;
-				if($cek > 0){ 
-					if($hak == "pengguna"){ 
-							$_SESSION['nama'] = $nama;
-							$_SESSION['hak'] = $hak;
-							$_SESSION['id'] = $id;
-						?>
-						<script> window.location.href='user/home.php' </script>
-				<?php }else if($hak == "admin"){ 
-							$_SESSION['nama'] = $nama;
-							$_SESSION['hak'] = $hak;
-							$_SESSION['id'] = $id;
-						?>
-						<script> window.location.href='admin/home.php' </script>
-				<?php }
-				}else{ ?>
-					<div class="alert alert-danger"> Login Gagal </div>
-				<?php } 
-			} ?>
-		</div>
-		<div class="col-sm-4">
-		</div>		
-	</div>	
-</div>
-<div class="register">
-    <br><br>
-        <div class="container">
-            <div class="register-home">
-                <p>
-                    <a href="index.php" class="btn btn-primary btn=lg">Kembali</a>
-                </p>
-            </div>
-        </div>
-</div>
-<div class="col-md-12 end-box ">
-         &copy; 2024 | All Rights Reserved | Bonbon Bakery and Cake
+if (isset($_POST['daftar'])) {
+  $nama = $_POST['nama'];
+  $jk = $_POST['jenis_kelamin'];
+  $tgl = $_POST['tgl_lahir'];
+  $user = $_POST['user'];
+  $pass = $_POST['pass'];
+  $sql = "INSERT INTO pengguna(nama,jenis_kelamin,tgl_lahir,username,password,hak) VALUES('$nama','$jk','$tgl','$user','$pass','pengguna')";
+  $query = mysqli_query($connect, $sql);
+  if ($query) {
+    echo "<script>alert('Pendaftaran berhasil, silakan login!');</script>";
+  } else {
+    echo '<div class="alert alert-danger mt-2 position-absolute top-0 start-50 translate-middle-x">Pendaftaran gagal!</div>';
+  }
+}
+?>
+
+<script>
+function toggleForm(toRegister) {
+  const container = document.getElementById('authContainer');
+  if (toRegister) {
+    container.classList.add("active");
+  } else {
+    container.classList.remove("active");
+  }
+}
+</script>
+<div class="container-auth" id="authContainer">
+  <div class="form-container sign-in-container">
+    <h2 class="mb-4">Masuk</h2>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-google"></i></a>
+      <a href="#"><i class="bi bi-facebook"></i></a>
     </div>
+    <form method="POST">
+      <input type="text" name="user" class="form-control mb-3" placeholder="Username" required>
+      <input type="password" name="pass" class="form-control mb-3" placeholder="Kata Sandi" required>
+      <button class="btn w-100" style="background-color: #C9AA7B; color: white; border-radius: 30px; font-size: 1.1rem; padding: 10px;" name="login">Masuk</button>
+    </form>
+  </div>
+  <div class="form-container sign-up-container">
+    <h2 class="mb-4">Daftar</h2>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-google"></i></a>
+      <a href="#"><i class="bi bi-facebook"></i></a>
+    </div>
+    <form method="POST">
+      <input type="text" name="nama" class="form-control mb-2" placeholder="Nama" required>
+      <select name="jenis_kelamin" class="form-control mb-2" required>
+        <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
+        <option value="Laki - Laki">Laki - Laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+      <input type="date" name="tgl_lahir" class="form-control mb-2" required>
+      <input type="text" name="user" class="form-control mb-2" placeholder="Username" required>
+      <input type="password" name="pass" class="form-control mb-2" placeholder="Kata Sandi" required>
+      <button class="btn w-100" style="background-color: #C9AA7B; color: white; border-radius: 30px; font-size: 1.1rem; padding: 10px;" name="daftar">Daftar</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <img src="assets/ico/barley.png" alt="Logo" width="200" class="mb-3">
+        <h3 class="fw-bold" style="font-family: 'Sansita Swashed', cursive;">Selamat Datang</h3>
+        <p>Masukkan data pribadi Anda dan ciptakan momen manis bersama toko kue kami!</p>
+        <button class="btn btn-outline-light mt-3" onclick="toggleForm(false)">MASUK</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <img src="assets/ico/barley.png" alt="Logo" width="200" class="mb-3">
+        <h3 class="fw-bold" style="font-family: 'Sansita Swashed', cursive;">Selamat Datang</h3>
+        <p>Yuk, login dan nikmati berbagai sajian manis yang sudah menantimu!</p>
+        <button class="btn btn-outline-light mt-3" onclick="toggleForm(true)">DAFTAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
