@@ -71,6 +71,164 @@ body {
       background-position: center;
     }
 
+
+/* asep */
+
+body {
+      font-family: 'Sora', sans-serif;
+      background-color: #f3e3cd;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #C9AA7B;
+    }
+    .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+      font-weight: bold;
+    }
+    .sidebar {
+      background-color: #AD8D5C;
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      margin-bottom: 20px;
+    }
+    .sidebar h5 {
+      margin-top: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 5px;
+      font-family: 'Sansita Swashed', cursive;
+      font-size: 1.3rem;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+    .product-box {
+      background: url('../images/content/dark-texture-produk.png') center/cover no-repeat;
+      color: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .product-box img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .product-box button {
+      background-color: #C9AA7B;
+      border: none;
+      padding: 8px 12px;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+    }
+    .product-box form {
+      position: relative;
+    }
+    .product-box .form-control[type=number] {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    .price-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .info-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .form-control[type=number] {
+      background-color: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+    }
+    .form-control[type=number]::placeholder {
+      color: white;
+    }
+    .form-control[type=number]:focus {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .pagination {
+      justify-content: center;
+    }
+    .pagination .page-link {
+      color: #C9AA7B;
+      font-weight: bold;
+    }
+    .pagination .active .page-link {
+      background-color: #C9AA7B;
+      border-color: #C9AA7B;
+      color: white;
+    }
+    .section-title {
+      font-family: 'Sansita Swashed', cursive;
+      font-size: 2rem;
+      margin: 30px 0;
+    }
+    .new-product {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+    .new-product:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+    }
+    .new-product img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .new-product .info {
+      flex-grow: 1;
+    }
+    .new-product .info span {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
+    }
+    .new-product .info strong {
+      display: block;
+      font-size: 0.85rem;
+    }
+    .new-product a {
+      color: white;
+      text-decoration: none;
+    }
+
 footer {
       background-color: #333;
       color: #ddd;

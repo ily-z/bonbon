@@ -121,13 +121,42 @@ include "resources/headers.php";
   <div class="container py-4">
     <h3 class="text-center mb-3">Selengkapnya</h3>
     <div class="row g-3">
-      <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="images/product/berry cupcake.jpg " alt="Card image cap">
-      <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+         
+      <div class="row">
+        <?php
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 9;
+        $offset = ($page - 1) * $limit;
+        $produk = mysqli_query($connect, "SELECT * FROM barang LIMIT $offset,$limit");
+        while($row = mysqli_fetch_array($produk)) {
+        ?>
+        <div class="col-md-4">
+          <div class="product-box " style="background-color: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; text-align: center;">
+            <img src="images/product/<?php echo $row['gambar']; ?>">
+            <h5 class="mt-2"><?php echo ucwords($row['nama_barang']); ?></h5>
+            <div class="price-info mb-2">
+              <span>Rp <?php echo number_format($row['harga']); ?></span>
+              <a href="detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
+            </div>
+            <form method="POST" action="simpan-keranjang.php" class="d-flex align-items-center gap-2">
+              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
+              <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
+              <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
+              <input type="number" name="jumlah" class="form-control form-control-sm me-2"
+                     style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                     value="1" min="1" max="<?php echo $row['stok']; ?>" required>
+              <button type="submit" class="btn btn-sm" style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
+            </form>
+          </div>
+        </div>
+        <?php } ?>
       </div>
     </div>
 
+        
+      </div>
+    </div>
+    
 
       <template x-for="i in 6" :key="i">
         <div class="col-6 col-md-4">
