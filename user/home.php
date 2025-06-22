@@ -17,6 +17,7 @@ include "../conf/connection.php";
   <link rel="shortcut icon" href="../assets/ico/barley.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&family=Sora&display=swap" rel="stylesheet">
   <style>
     body {
@@ -234,15 +235,19 @@ include "../conf/connection.php";
               <span>Rp <?php echo number_format($row['harga']); ?></span>
               <a href="detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
             </div>
-            <form method="POST" action="simpan-keranjang.php" class="d-flex align-items-center gap-2">
-              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
-              <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
-              <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
-              <input type="number" name="jumlah" class="form-control form-control-sm me-2"
-                     style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
-                     value="1" min="1" max="<?php echo $row['stok']; ?>" required>
-              <button type="submit" class="btn btn-sm" style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
-            </form>
+            <?php if ($row['stok'] > 0): ?>
+              <form method="POST" action="simpan-keranjang.php" class="d-flex align-items-center gap-2">
+                <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
+                <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
+                <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
+                <input type="number" name="jumlah" class="form-control form-control-sm me-2"
+                       style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                       value="1" min="1" max="<?php echo $row['stok']; ?>" required>
+                <button type="submit" class="btn btn-sm" style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
+              </form>
+            <?php else: ?>
+              <div class="text-center text-danger fw-bold">Stok Habis</div>
+            <?php endif; ?>
           </div>
         </div>
         <?php } ?>

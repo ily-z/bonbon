@@ -15,8 +15,8 @@ include "../conf/connection.php";
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keranjang | Bonbon Bakery</title>
   <link rel="shortcut icon" href="../assets/ico/barley.png" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -214,7 +214,7 @@ include "../conf/connection.php";
     </div>
     <?php } else { ?>
       <div class="text-center">
-        <img src="../assets/ico/kosong.png" width="180">
+        <img src="../assets/ico/keranjang.png" width="180">
         <h3 class="mt-3">Belum ada barang di keranjang.</h3>
       </div>
     <?php } ?>
