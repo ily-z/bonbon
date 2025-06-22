@@ -11,6 +11,7 @@ include_once 'conf/connection.php';
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/js/bootstrap.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
      
     <!-- alpine cnd -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect/dist/cdn.min.js"></script>
