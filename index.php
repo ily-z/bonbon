@@ -7,26 +7,32 @@ include "resources/headers.php";
   <!-- Header -->
  <header class="p-3 bg-dark text-white sticky-top"> 
     <div class="container">
+       
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <img src="assets/ico/barley.png" width="40" class="me-2">
+        <a class="navbar-brand" href="#">
+       Bombon Bakery
+    </a>
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          
+          <li><a href="#promo-section" class="nav-link px-2 text-white">Promo</a></li>
+          <li><a href="#produk-grid" class="nav-link px-2 text-white">Our products</a></li>
+          <li><a href="#tentang-kami" class="nav-link px-2 text-white">About</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
           <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-        </form>
+        </form> -->
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <a href="masuk.php"><button type="button" class="btn btn-outline-light me-2">masuk</button></a>
+          <!-- <a href="masuk.php#authContainer><button type="button" class="btn btn-warning">Sign-up</button> </a> -->
+           
+          
         </div>
       </div>
     </div>
@@ -42,7 +48,8 @@ include "resources/headers.php";
       <div class="carousel-caption carousel-caption-left d-none d-md-block">
         <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
         <h1  class="sansita-swashed-carousel" >Manis di setiap Gigitan</h1>
-      <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+      <a href="#produk-grid"><button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button></a>
+      
       </div>
     </div>
 
@@ -51,7 +58,8 @@ include "resources/headers.php";
       <div class="carousel-caption carousel-caption-left d-none d-md-block">
         <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
         <h1  class="sansita-swashed-carousel" >Manis di setiap Gigitan</h1>
-      <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+        <a href="#produk-grid"><button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button></a>
+      
       </div>
     </div>
 
@@ -60,7 +68,8 @@ include "resources/headers.php";
       <div class="carousel-caption carousel-caption-left d-none d-md-block">
       <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
         <h1 class="sansita-swashed-carousel" >Second Slide</h1>
-        <button class="btn mt-3 btl-clr-caroulsel">Jangan Sampai ketinggalan</button>
+        <a href="#produk-grid"><button class="btn mt-3 btl-clr-caroulsel">Jangan Sampai ketinggalan</button></a>
+        
       </div>
     </div>
 
@@ -69,7 +78,8 @@ include "resources/headers.php";
       <div class="carousel-caption d-none d-md-block carousel-caption-left">
         <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
         <h1 class="sansita-swashed-carousel" >Delightfull!</h1>
-        <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+        <a href="#produk-grid"><button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button></a>
+        
       </div>
     </div>
   </div>
@@ -86,6 +96,7 @@ include "resources/headers.php";
 <div class="h-[1px]"></div> <!-- Scroll space -->
 
   <section 
+    id="promo-section"
     class="section-bg h-[500px] flex items-center justify-center relative overflow-hidden text-center"
     x-data="{ show: false }"
     x-intersect.once="show = true"
@@ -167,7 +178,7 @@ include "resources/headers.php";
                     type="number" 
                     name="jumlah" 
                     class="form-control form-control-sm me-1"
-                    style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                    style="width: 70px; background-color: rgba(237, 208, 140, 0.14); border: 1px solid rgba(255,255,255,0.3); color: white;"
                     x-model="jumlah"
                     :min="min"
                     :max="max"
@@ -204,11 +215,30 @@ include "resources/headers.php";
   </div>
   
   <!-- Tentang Kami -->
-  <div class="container py-4">
-    <div class="bg-light p-4 text-center">
+  <div class="container  align-items-center py-20" id ="tentang-kami">
+    <div
+    x-data="{open:false}"  @keyup.esc.window="open=false"
+    @click.outside="open = false"
+    @keyup.esc.window="open = false "
+    class="bg-light p-4 my-10 text-center ">
       <h4>Tentang Kami</h4>
       <p>Kami berkomitmen menghadirkan kue terbaik dari bahan pilihan.</p>
-      <button class="btn btn-dark">Selengkapnya</button>
+      <button @click="open=!open" x-text="open? 'tutup':'selengkapnya'" class="py-2 px-5 bg-orange-300 text-white rounded-xl">open sessame</button>
+      <div class="d-flex align-items-center row g-3 ">
+        <div x-show="open" x-transition.origin.right.duration.500ms > 
+            <h4>Lokasi Kami</h4>
+            <a href="maps.php"><button class="btn btn-primary">maps</button></a>
+        </div>
+        <div x-show="open" x-transition.origin.right.duration.600ms > 
+          <h4>kami siap membanntu anda</h4>
+          <a href="pusat-bantuan.php"><button class="btn btn-secondary">pusat batuan</button></a>
+        </div>
+        <div x-show="open" x-transition.origin.right.duration.700ms > 
+            <h4>harap mematuhi panduan kami</h4>
+            <a href="panduan-pengguna.php"><button class="btn btn-primary">panduan pengguna</button></a>
+        </div>
+      </div>
+
     </div>
   </div>
   

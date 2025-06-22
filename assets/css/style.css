@@ -235,6 +235,22 @@ body {
       text-decoration: none;
     }
 
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      - webkit-appearance: none;
+      margin: 0;
+    }
+ .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+      font-weight: bold;
+    }
+.navbar-brand {
+    font-family: 'Sansita Swashed', cursive;
+    font-size: 1.5rem;
+  }
+  .navbar-brand img {
+    margin-right: 10px;
+  }
 footer {
       background-color: #333;
       color: #ddd;
