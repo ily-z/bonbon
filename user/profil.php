@@ -1,6 +1,6 @@
 <?php session_start();
 if(empty($_SESSION['nama'])){ ?>
-    <script> window.location.href='../index.php' </script>
+    <script> window.location.href='../masuk.php' </script>
 <?php }
 $nama = $_SESSION['nama'];
 $id = $_SESSION['id'];

@@ -3,7 +3,7 @@ session_start();
 include "../conf/connection.php";
 
 if (empty($_SESSION['id'])) {
-    header("Location: ../index.php");
+    header("Location: ../masuk.php");
     exit;
 }
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (empty($_SESSION['nama'])) {
-    echo "<script> window.location.href='../index.php' </script>";
+    echo "<script> window.location.href='../masuk.php' </script>";
     exit;
 }
 if ($_SESSION['hak'] != 'pengguna') {

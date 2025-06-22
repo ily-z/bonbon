@@ -38,6 +38,15 @@ include "resources/headers.php";
   <div class="carousel-inner">
 
     <div class="carousel-item active">
+      <img src="images/content/background.jpg" class="d-block w-100 " alt="Slide 1" style="filter:brightness(65%)" >
+      <div class="carousel-caption carousel-caption-left d-none d-md-block">
+        <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
+        <h1  class="sansita-swashed-carousel" >Manis di setiap Gigitan</h1>
+      <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+      </div>
+    </div>
+
+    <div class="carousel-item ">
       <img src="images/carousel/image1.jpg" class="d-block w-100 " alt="Slide 1" style="filter:brightness(65%)" >
       <div class="carousel-caption carousel-caption-left d-none d-md-block">
         <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
@@ -74,18 +83,19 @@ include "resources/headers.php";
   </button>
 </div>
 
-<div class="h-[50px]"></div> <!-- Scroll space -->
+<div class="h-[1px]"></div> <!-- Scroll space -->
 
   <section 
-    class="section-bg h-[500px] flex items-center justify-center relative overflow-hidden"
+    class="section-bg h-[500px] flex items-center justify-center relative overflow-hidden text-center"
     x-data="{ show: false }"
     x-intersect.once="show = true"
+    style="background-image: url('images/background-table.jpg'); background-size: cover; background-position: center;"
   >
     <!-- Caption -->
     <div class="text-white text-4xl font-bold z-10">
       <h5>Dapatkan 20% untuk pembelian pertama Anda!</h5>
     <p>Gunakan kode promo: <strong>MANIS20</strong> saat checkout.</p>
-    <button class="btn btn-dark">Selengkapnya</button>
+    <a href="#produk-grid" ><button class="btn btn-dark">Selengkapnya</button></a>
     </div>
 
     <!-- Left Decoration -->
@@ -118,8 +128,8 @@ include "resources/headers.php";
 
   
   <!-- Produk Grid -->
-  <div class="container py-4">
-    <h3 class="text-center mb-3">Selengkapnya</h3>
+  <div class="container py-4" id ="produk-grid">
+    <h3 class="products-landing-page text-center mb-3 py-5">Selengkapnya</h3>
     <div class="row g-3">
          
       <div class="row">
@@ -132,21 +142,45 @@ include "resources/headers.php";
         ?>
         <div class="col-md-4">
 
-          <div class="product-box " style="background-color: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; text-align: center;">
+          <div class="product-box" >
             <img src="images/product/<?php echo $row['gambar']; ?>">
             <h5 class="mt-2"><?php echo ucwords($row['nama_barang']); ?></h5>
             <div class="price-info mb-2">
               <span>Rp <?php echo number_format($row['harga']); ?></span>
-              <a href="detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
+              <a href="user/detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
             </div>
-            <form method="POST" action="simpan-keranjang.php" class="d-flex align-items-center gap-2">
+            <form method="POST" action="user/simpan-keranjang.php" class="d-flex align-items-center gap-2">
               <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
               <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
               <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
-              <input type="number" name="jumlah" class="form-control form-control-sm me-2"
-                     style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
-                     value="1" min="1" max="<?php echo $row['stok']; ?>" required>
-              <button type="submit" class="btn btn-sm" style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
+              <div 
+                  x-data="{ jumlah: 1, min: 1, max: <?php echo $row['stok']; ?> }"
+                  class="d-flex align-items-center"
+                >
+                  <!-- Tombol minus -->
+                  <button type="button" class="btn btn-sm btn-secondary me-1"
+                    @click="if(jumlah > min) jumlah--"
+                  >-</button>
+
+                  <!-- Input -->
+                  <input 
+                    type="number" 
+                    name="jumlah" 
+                    class="form-control form-control-sm me-1"
+                    style="width: 70px; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                    x-model="jumlah"
+                    :min="min"
+                    :max="max"
+                    required
+                  >
+
+                  <!-- Tombol plus -->
+                  <button type="button" class="btn btn-sm btn-secondary"
+                    @click="if(jumlah < max) jumlah++"
+                  >+</button>
+                </div>
+
+              <button type="submit" class="product-box-button " style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
             </form>
           </div>
         </div>

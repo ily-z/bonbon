@@ -1,6 +1,6 @@
 <?php session_start();
 if(empty($_SESSION['nama'])){ ?>
-    <script> window.location.href='../index.php' </script>
+    <script> window.location.href='../masuk.php' </script>
 <?php } 
 if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script> <?php }
 	include "../conf/connection.php";

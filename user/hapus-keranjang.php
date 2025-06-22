@@ -3,7 +3,7 @@ session_start();
 include "../conf/connection.php";
 
 if (empty($_SESSION['id']) || $_SESSION['hak'] != 'pengguna') {
-    echo "<script>alert('Akses ditolak!'); window.location.href='../index.php';</script>";
+    echo "<script>alert('Akses ditolak!'); window.location.href='../masuk.php';</script>";
     exit;
 }
 

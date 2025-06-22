@@ -19,21 +19,18 @@ body {
       align-items: center;
     }
 
-
-
-/* Untuk mengatur tinggi keseluruhan carousel */
 .carousel {
     height: 650px; /* Sesuaikan tinggi yang kamu inginkan */
     overflow: hidden; /* Penting untuk menyembunyikan bagian gambar yang melebihi batas */
 }
 
-/* Untuk memastikan .carousel-inner dan .carousel-item mengikuti tinggi carousel */
+
 .carousel-inner,
 .carousel-item {
     height: 100%;
 }
 
-/* Untuk mengatur tinggi gambar di dalam carousel */
+
 .carousel-item img {
     height: 100%;
     width: 100%; /* Atau 'auto' jika kamu ingin mempertahankan rasio aspek */
@@ -66,11 +63,20 @@ body {
       color: #fff;
     }
 .section-bg {
-      background-image: url('./images/background-table.jpg');
+      background-image: url('../images/background-table.jpg') ;
       background-size: cover;
       background-position: center;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
     }
-
+.products-landing-page{
+  font-family: "Sansita Swashed", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: bold;
+  font-size: 4rem;
+}
 
 /* asep */
 
@@ -112,7 +118,7 @@ body {
       text-decoration: underline;
     }
     .product-box {
-      background: url('../images/content/dark-texture-produk.png') center/cover no-repeat;
+      background: url('images/content/dark-texture-produk.png') center/cover no-repeat;
       color: white;
       border-radius: 10px;
       padding: 15px;
@@ -125,7 +131,7 @@ body {
       object-fit: cover;
       border-radius: 10px;
     }
-    .product-box button {
+    .product-box-button {
       background-color: #C9AA7B;
       border: none;
       padding: 8px 12px;
