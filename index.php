@@ -1,26 +1,11 @@
 <?php 
-include "conf/connection.php";
+include "resources/headers.php";
  ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bonbon Bakery and Cakes</title>
-    <link href="assets/ico/barley.jpeg" rel="shortcut icon">
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stye" href="assets/js/bootstrap.min.js">
-     <!-- custom CSS here -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <style>
-        .flat{
-            border-radius: 0px;
-        }
-    </style>
-</head>
+
 <body>
- <header class="p-3 bg-dark text-white">
+  
+  <!-- Header -->
+ <header class="p-3 bg-dark text-white sticky-top"> 
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -46,6 +31,141 @@ include "conf/connection.php";
       </div>
     </div>
   </header>
+
+  <!-- Carousel -->
+
+  <div id="myCarousel" class="carousel slide h-50%" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <img src="images/carousel/image1.jpg" class="d-block w-100 " alt="Slide 1" style="filter:brightness(65%)" >
+      <div class="carousel-caption carousel-caption-left d-none d-md-block">
+        <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
+        <h1  class="sansita-swashed-carousel" >Manis di setiap Gigitan</h1>
+      <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="images/carousel/image2.jpg" class="d-block w-100" alt="Slide 2" style="filter:brightness(65%)">
+      <div class="carousel-caption carousel-caption-left d-none d-md-block">
+      <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
+        <h1 class="sansita-swashed-carousel" >Second Slide</h1>
+        <button class="btn mt-3 btl-clr-caroulsel">Jangan Sampai ketinggalan</button>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="images/carousel/image3.jpg" class="d-block w-100" alt="Slide 3" style="filter:brightness(65%)">
+      <div class="carousel-caption d-none d-md-block carousel-caption-left">
+        <h3 style="color: #E9BD8C;" >Bonbon Backery and Cake</h3>
+        <h1 class="sansita-swashed-carousel" >Delightfull!</h1>
+        <button class="btn mt-3 btl-clr-caroulsel">Pesan Sekarang</button>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="h-[50px]"></div> <!-- Scroll space -->
+
+  <section 
+    class="section-bg h-[500px] flex items-center justify-center relative overflow-hidden"
+    x-data="{ show: false }"
+    x-intersect.once="show = true"
+  >
+    <!-- Caption -->
+    <div class="text-white text-4xl font-bold z-10">
+      <h5>Dapatkan 20% untuk pembelian pertama Anda!</h5>
+    <p>Gunakan kode promo: <strong>MANIS20</strong> saat checkout.</p>
+    <button class="btn btn-dark">Selengkapnya</button>
+    </div>
+
+    <!-- Left Decoration -->
+    <img 
+      src="images/animate_scroll/cupcakes.png" 
+      width="400"
+      alt="Left decoration"
+      class="absolute left-0 top-1/2 transform -translate-y-1/2 drop-shadow-xl/50"
+      x-show="show"
+      x-transition:enter="transition duration-2000 ease-out"
+      x-transition:enter-start="-translate-x-full opacity-0"
+      x-transition:enter-end="translate-x-10 opacity-100"
+    >
+
+    <!-- Right Decoration -->
+    <img 
+      src="images/animate_scroll/mix-bread.png" 
+      width="400"
+      alt="Right decoration"
+      class="absolute right-0 top-1/2 transform -translate-y-1/2 drop-shadow-xl/50"
+      x-show="show"
+      x-transition:enter="transition duration-2000 ease-out"
+      x-transition:enter-start="translate-x-full opacity-0"
+      x-transition:enter-end="-translate-x-10 opacity-100"
+    >
+  </section>
+
+  <div class="h-[50px]"></div> <!-- More scroll space -->
+
+
+  
+  <!-- Produk Grid -->
+  <div class="container py-4">
+    <h3 class="text-center mb-3">Selengkapnya</h3>
+    <div class="row g-3">
+      <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="images/product/berry cupcake.jpg " alt="Card image cap">
+      <div class="card-body">
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+
+
+      <template x-for="i in 6" :key="i">
+        <div class="col-6 col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Kue">
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+  
+  <!-- Tentang Kami -->
+  <div class="container py-4">
+    <div class="bg-light p-4 text-center">
+      <h4>Tentang Kami</h4>
+      <p>Kami berkomitmen menghadirkan kue terbaik dari bahan pilihan.</p>
+      <button class="btn btn-dark">Selengkapnya</button>
+    </div>
+  </div>
+  
+  <!-- Rekomendasi -->
+  <div class="container py-4">
+    <h4 class="text-center mb-3">Rekomendasi Manis</h4>
+    <div class="row text-center">
+      <div class="col-4">
+        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Kue">
+        <p>Kue<br>Rp 10.000</p>
+      </div>
+      <div class="col-4">
+        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Donat">
+        <p>Kue<br>Rp 5.000</p>
+      </div>
+      <div class="col-4">
+        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Brownies">
+        <p>Kue<br>Rp 15.000</p>
+      </div>
+    </div>
+  </div>
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
@@ -117,16 +237,16 @@ include "conf/connection.php";
                     } // end while
                 }else{ 
                     ?>
+
                     <center><img src="assets/ico/kosong.png"><h2>Barang Tidak Tersedia!!</h2></center>
-                <?php } 
-                ?>
+                <?php } ?>
                 </div>
 
             <center>
-                <!-- /.row -->
+                
                 <div class="row">
                     <ul class="pagination">
-                    <!-- LINK NUMBER -->
+                    
                     <?php
                     // Buat query untuk menghitung semua jumlah data
                     $q2 = "select * from barang";
@@ -221,23 +341,8 @@ include "conf/connection.php";
             </div>
         <!-- /.row -->
     </div>
-    <!-- /.container -->
+    <!-- /.container -->        
     
-    <!--Footer -->
-    <div class="col-md-12 end-box ">
-         &copy; 2024 | All Rights Reserved | Bonbon Bakery and Cake
-    </div>
+<?php include "resources/footers.php"; ?>
 
-    <!-- /.col -->
-    <!--Footer end -->
-    <!--jQUERY FILES-->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!--BOOTSTRAP  FILES-->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- ANIMATE SCROLL -->
-    <script src="assets/js/animatescroll.js"></script>
-    <!-- HOVER IMAGE EFFECT -->
-    <script src="assets/js/hover.image.effect.js"></script>
-    ?>
-</body>
-</html>
+

@@ -1,0 +1,78 @@
+body {
+       background-color:rgb(246, 202, 148); 
+    }
+.hero {
+      background: url('images/backgrund-table.jpg') center/cover no-repeat;
+      min-height: 500px;
+      position: relative;
+      color: white;
+    }
+.hero-overlay {
+      /* background: rgba(0,0,0,0.5); */
+      background-images= url('images/backgrund-table.jpg');
+      background-size: cover;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+
+/* Untuk mengatur tinggi keseluruhan carousel */
+.carousel {
+    height: 650px; /* Sesuaikan tinggi yang kamu inginkan */
+    overflow: hidden; /* Penting untuk menyembunyikan bagian gambar yang melebihi batas */
+}
+
+/* Untuk memastikan .carousel-inner dan .carousel-item mengikuti tinggi carousel */
+.carousel-inner,
+.carousel-item {
+    height: 100%;
+}
+
+/* Untuk mengatur tinggi gambar di dalam carousel */
+.carousel-item img {
+    height: 100%;
+    width: 100%; /* Atau 'auto' jika kamu ingin mempertahankan rasio aspek */
+    object-fit: cover; /* Penting agar gambar tidak terdistorsi dan mengisi ruang */
+    object-position: center; /* Untuk memusatkan gambar */
+}
+
+.carousel-caption-left {
+  left: 10rem;  /* Add space from the left edge */
+  right: auto;
+  text-align: left;
+  bottom: 10rem; /* Adjust as needed */
+}
+
+.sansita-swashed-carousel{
+    font-family: "Sansita Swashed", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: bold;
+  font-size: 4rem;
+}
+.btl-clr-caroulsel {
+      font-family: 'Bitter', serif;
+      font-size: 1.5rem;
+      color:rgb(75, 51, 15);
+      background-color: #E9BD8C;
+    }
+.btl-clr-caroulsel:hover {
+      background-color:rgb(58, 40, 21);
+      color: #fff;
+    }
+.section-bg {
+      background-image: url('./images/background-table.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+footer {
+      background-color: #333;
+      color: #ddd;
+      padding: 2rem 0;
+    }
