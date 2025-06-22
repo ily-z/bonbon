@@ -131,6 +131,7 @@ include "resources/headers.php";
         while($row = mysqli_fetch_array($produk)) {
         ?>
         <div class="col-md-4">
+
           <div class="product-box " style="background-color: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; text-align: center;">
             <img src="images/product/<?php echo $row['gambar']; ?>">
             <h5 class="mt-2"><?php echo ucwords($row['nama_barang']); ?></h5>
