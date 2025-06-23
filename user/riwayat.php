@@ -86,6 +86,7 @@ include "../conf/connection.php";
     <div style="width: 20%;">No Telp</div>
     <div style="width: 20%;">Total</div>
     <div style="width: 20%; text-align: center;">Aksi</div>
+    <div style="width: 20%; text-align: center;">Cetak</div>
   </div>
 
   <?php
@@ -104,8 +105,11 @@ include "../conf/connection.php";
     <div style="width: 20%;">Rp.<?php echo number_format($data['subtotal']); ?></div>
     <div style="width: 20%; text-align: center;">
       <a href="detail-riwayat.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">Detail Barang</a>
-      <a href="print.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" target="_BLANK" class="btn-print"><i class="bi bi-printer-fill"></i></a>
     </div>
+    <div style="width: 20%; text-align: center;">
+    <a href="print.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" target="_BLANK" class="btn-print"><i class="bi bi-printer-fill"></i></a>
+    </div>
+    
   </div>
   <?php }} else { ?>
     <div class="no-data">

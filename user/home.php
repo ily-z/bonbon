@@ -174,6 +174,12 @@ include "../conf/connection.php";
       color: white;
       text-decoration: none;
     }
+    .footer {
+      background: #222;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
