@@ -94,9 +94,8 @@ include "../conf/connection.php";
 </div>
 
 <!-- Footer -->
-<div class="footer">
-  &copy; 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi
-</div>
 
+
+<?php include "admin-footer.php"; ?>
 </body>
 </html>

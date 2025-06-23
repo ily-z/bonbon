@@ -206,12 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_barang'])) {
     <a href="cetak-barang.php" class="btn btn-cetak" target="_blank">Cetak</a>
   </div>
 </div>
-
-<!-- Footer -->
-<div class="footer">
-  &copy; 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<?php include "admin-footer.php"; ?>
 </body>
 </html>

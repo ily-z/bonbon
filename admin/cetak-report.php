@@ -191,3 +191,6 @@ function ambiltotalsemua($array){
     
 </body>
 </html>
+<?php include "admin-footer.php"; ?>
+</body>
+</html>

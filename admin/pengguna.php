@@ -68,11 +68,6 @@ include "../conf/connection.php";
   </div>
 </div>
 
-<!-- Footer -->
-<div class="footer">
-  &copy; 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
@@ -82,5 +77,6 @@ include "../conf/connection.php";
       $('#tables').DataTable();
     });
 </script>
+<?php include "admin-footer.php"; ?>
 </body>
 </html>

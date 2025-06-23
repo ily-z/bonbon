@@ -140,3 +140,6 @@ include "../conf/connection.php";
     </script>
 </body>
 </html>
+<?php include "admin-footer.php"; ?>
+</body>
+</html>

@@ -44,12 +44,8 @@
 </style>
 
 <footer>
-  <div class="container">
-    
-    <hr class="bg-light">
-    
-    <div class="text-center mt-4">
-      <small>© 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi</small>
-    </div>
+  <hr class="bg-light">
+  <div class="text-center mt-4">
+    <small>© 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi</small>
   </div>
 </footer>

@@ -64,13 +64,6 @@ function ambiltotalsemua($array) {
         .btn-status {
             font-weight: bold;
         }
-        .footer {
-            background-color: #1f1f1f;
-            color: #ccc;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-        }
         .btn-coklat {
             background-color: #5e3b25;
             color: white;
@@ -208,11 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $tglawal && $tglakhir) {
 </div>
 <?php endif; ?>
 
-<!-- Footer -->
-<div class="footer">
-    &copy; 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
