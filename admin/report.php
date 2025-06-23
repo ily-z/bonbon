@@ -7,6 +7,7 @@ if(empty($_SESSION['nama'])){ ?>
 $nama = $_SESSION['nama'];
 if($_SESSION['hak'] == 'admin'){}else{ ?> <script> alert('Anda Bukan Admin!'); window.location.href='../logout.php' </script> <?php } 
 include "../conf/connection.php";
+include "admin-navbar.php";
 $show='none';
 
 function bindingarr($arr){
@@ -64,40 +65,14 @@ function ambiltotalsemua($array){
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Datatables core CSS -->
     <link href="../assets/css/datatables.css" rel="stylesheet">
      <!-- custom CSS here -->
     <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="home.php">Beranda</a></li>
-                    <li><a href="pengguna.php">Pengguna</a></li>
-                    <li ><a href="kategori.php">Kategori</a></li>
-                    <li><a href="barang.php">Barang</a></li>
-                    <li class="active"><a href="report.php">Laporan</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>
-                    <li><a href="../logout.php">Keluar</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+    
     <br>
     <div class="container">
     <br><br>
@@ -131,13 +106,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     //var_dump($data);
     $tabeldata=totalByDay( bindingarr($result));
     $show='block';
-    if(isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
+    if (isset($_SESSION['tglawal'],$_SESSION['tglakhir'])){
         $_SESSION['tglawal']=$tglawal;
         $_SESSION['tglakhir']=$tglakhir;
     }
 }
 
-if(!isset($_POST['tglawal'],$_POST['tglakhir'])){
+if(!isset($_POST['tglawal'] )&& !isset( $_POST['tglakhir'])){
     $_POST['tanggalawal']=$_SESSION['tglawal'];
     $_POST['tanggalakhir']=$_SESSION['tglakhir'];
 
@@ -221,9 +196,12 @@ if(!isset($_POST['tglawal'],$_POST['tglakhir'])){
 
 
 	<!--Footer -->
-    <div class="col-md-12 end-box ">
-         &copy; 2024 | All Rights Reserved | Bonbon Bakery and Cake
-    </div>
+    <footer>
+        <?php 
+   include "admin-footer.php";
+   ?>
+    </footer>
+    
     <!-- /.col -->
     <!--Footer end -->
     <!--jQUERY FILES-->

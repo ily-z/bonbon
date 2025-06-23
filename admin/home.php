@@ -5,6 +5,7 @@ if(empty($_SESSION['nama'])){ ?>
 $nama = $_SESSION['nama'];
 if($_SESSION['hak'] == 'admin'){}else{ ?> <script> alert('Anda Bukan Admin!'); window.location.href='../logout.php' </script> <?php } 
 include "../conf/connection.php";
+include "admin-navbar.php";
  ?>
 <!DOCTYPE html>
 <html>
@@ -15,42 +16,16 @@ include "../conf/connection.php";
     <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Datatables core CSS -->
     <link href="../assets/css/datatables.css" rel="stylesheet">
      <!-- custom CSS here -->
     <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="home.php">Beranda</a></li>
-                    <li><a href="pengguna.php">Pengguna</a></li>
-                    <li><a href="kategori.php">Kategori</a></li>
-                    <li><a href="barang.php">Barang</a></li>
-                    <li><a href="report.php">Laporan</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>
-                    <li><a href="../logout.php">Keluar</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-<div class="container">
-   <br><br>
+    
+<div class="container mt-40">
+   <br><br><br><br>
    <div class="page-header">
    	<h2> Daftar Order </h2>
    </div>
@@ -102,9 +77,9 @@ include "../conf/connection.php";
 
 
     <!--Footer -->
-    <div class="col-md-12 end-box ">
-         &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
-    </div>
+   <?php 
+   include "admin-footer.php";
+   ?>
     <!-- /.col -->
     <!--Footer end -->
     <!--jQUERY FILES-->

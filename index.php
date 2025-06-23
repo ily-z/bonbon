@@ -17,11 +17,11 @@ include "resources/headers.php";
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mx-2">
           
-          <li><a href="#promo-section" class="nav-link px-2 text-white">Promo</a></li>
-          <li><a href="#produk-grid" class="nav-link px-2 text-white">Our products</a></li>
-          <li><a href="#tentang-kami" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="#promo-section" class="nav-link px-3 text-white">Promo</a></li>
+          <li><a href="#produk-grid" class="nav-link px-3 text-white">Our products</a></li>
+          <li><a href="#tentang-kami" class="nav-link px-3 text-white">About</a></li>
         </ul>
 
         <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -215,27 +215,52 @@ include "resources/headers.php";
   </div>
   
   <!-- Tentang Kami -->
-  <div class="container  align-items-center py-20" id ="tentang-kami">
+  <div class="container  align-items-center py-20" id ="tentang-kami" 
+  >
     <div
+     style="background-image: url('images/background-table.jpg'); background-size: cover; background-position: fix; "
     x-data="{open:false}"  @keyup.esc.window="open=false"
     @click.outside="open = false"
     @keyup.esc.window="open = false "
-    class="bg-light p-4 my-10 text-center ">
-      <h4>Tentang Kami</h4>
+    class="bg-light p-4 my-10 text-center align-items-center rounded-lg shadow-lg">
+      <h4 style="font-family: 'Sansita Swashed', system-ui; font-optical-sizing: auto; font-weight: 600; font-style: bold; font-size: 2rem; " >Tentang Kami</h4>
       <p>Kami berkomitmen menghadirkan kue terbaik dari bahan pilihan.</p>
       <button @click="open=!open" x-text="open? 'tutup':'selengkapnya'" class="py-2 px-5 bg-orange-300 text-white rounded-xl">open sessame</button>
-      <div class="d-flex align-items-center row g-3 ">
-        <div x-show="open" x-transition.origin.right.duration.500ms > 
-            <h4>Lokasi Kami</h4>
-            <a href="maps.php"><button class="btn btn-primary">maps</button></a>
+      <div class="d-flex  justify-content-center row g-3 align-items-center px-6 my-4">
+
+        <div x-show="open" x-transition.origin.right.duration.300ms  x-transition.leave.duration.800  class="col"> 
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Lokasi Kami</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Our Location</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+              
+              <a href="maps.php"><button class="btn btn-primary"><i class="bi bi-geo-alt-fill"></i></button></a>
+            </div>
+          </div>
         </div>
-        <div x-show="open" x-transition.origin.right.duration.600ms > 
-          <h4>kami siap membanntu anda</h4>
-          <a href="pusat-bantuan.php"><button class="btn btn-secondary">pusat batuan</button></a>
+        <div x-show="open" x-transition.origin.right.duration.600ms class="col"> 
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Siap Membantu Anda</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Ready to help</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+              
+              <a href="pusat-bantuan.php"><button class="btn btn-secondary"><i class="bi bi-headset"></i></button></a>
+            </div>
+          </div>
         </div>
-        <div x-show="open" x-transition.origin.right.duration.700ms > 
-            <h4>harap mematuhi panduan kami</h4>
-            <a href="panduan-pengguna.php"><button class="btn btn-primary">panduan pengguna</button></a>
+        <div x-show="open" x-transition.origin.right.duration.900ms x-transition.leave.duration.400 class="col"> 
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"> Panduan Kami</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Our rules</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+              
+              <a href="panduan-pengguna.php"><button class="btn btn-info"><i class="bi bi-file-earmark-ruled-fill"></i></button>
+            </div>
+          </div>
+            
         </div>
       </div>
 
