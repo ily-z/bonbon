@@ -21,6 +21,7 @@ include "resources/headers.php";
           
           <li><a href="#promo-section" class="nav-link px-3 text-white">Promo</a></li>
           <li><a href="#produk-grid" class="nav-link px-3 text-white">Our products</a></li>
+          <li><a href="#rekomendasi" class="nav-link px-3 text-white">Recomended</a></li>
           <li><a href="#tentang-kami" class="nav-link px-3 text-white">About</a></li>
         </ul>
 
@@ -215,7 +216,7 @@ include "resources/headers.php";
   </div>
   
   <!-- Tentang Kami -->
-  <div class="container  align-items-center py-20" id ="tentang-kami" 
+  <div class="container  align-items-center py-10" id ="tentang-kami" 
   >
     <div
      style="background-image: url('images/background-table.jpg'); background-size: cover; background-position: fix; "
@@ -257,7 +258,7 @@ include "resources/headers.php";
               <h6 class="card-subtitle mb-2 text-body-secondary">Our rules</h6>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
               
-              <a href="panduan-pengguna.php"><button class="btn btn-info"><i class="bi bi-file-earmark-ruled-fill"></i></button>
+              <a href="panduan-pengguna.php"><button class="btn btn-info"><i class="bi bi-file-earmark-ruled-fill"></i></button></a>
             </div>
           </div>
             
@@ -268,199 +269,86 @@ include "resources/headers.php";
   </div>
   
   <!-- Rekomendasi -->
-  <div class="container py-4">
-    <h4 class="text-center mb-3">Rekomendasi Manis</h4>
+  <div class="container py-20 mt-10" id="rekomendasi">
+    <h4 class="sansita-swashed-carousel text-center mb-3">Rekomendasi Manis</h4>
     <div class="row text-center">
-      <div class="col-4">
-        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Kue">
-        <p>Kue<br>Rp 10.000</p>
-      </div>
-      <div class="col-4">
-        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Donat">
-        <p>Kue<br>Rp 5.000</p>
-      </div>
-      <div class="col-4">
-        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Brownies">
-        <p>Kue<br>Rp 15.000</p>
-      </div>
+      <div class="row g-3">
+    <div class="row">
+          <?php
+  function getRandomProductsId(){
+    global $connect;
+    $query_to_rd="SELECT id_barang FROM barang";
+    $q_result=mysqli_query($connect,$query_to_rd);
+    $dat_random=mysqli_fetch_all($q_result);
+    //var_dump($dat_random);
+    $arr_random = [];
+    foreach ($dat_random as $value) {
+        $arr_random[] = $value[0];
+    }
+    //print_r($arr_random);
+    $rand=array_rand($arr_random,3);
+
+    return [$arr_random[$rand[0]], $arr_random[$rand[1]], $arr_random[$rand[2]]];
+  }
+  //var_dump(getRandomProductsId());
+
+  foreach( getRandomProductsId() as $dat){
+    //echo $dat;
+    $query_from_rand = "SELECT * FROM barang WHERE id_barang = '$dat'";
+    $result = mysqli_query($connect, $query_from_rand);
+    $row = mysqli_fetch_assoc($result, );
+    //var_dump($row);
+    ?>
+    <div class="col-md-4">
+
+          <div class="product-box" >
+            <img src="images/product/<?php echo $row['gambar']; ?>">
+            <h5 class="mt-2"><?php echo ucwords($row['nama_barang']); ?></h5>
+            <div class="price-info mb-2">
+              <span>Rp <?php echo number_format($row['harga']); ?></span>
+              <a href="user/detail-produk.php?id=<?php echo $row['id_barang']; ?>" class="info-link">i</a>
+            </div>
+            <form method="POST" action="user/simpan-keranjang.php" class="d-flex align-items-center gap-2">
+              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
+              <input type="hidden" name="harga" value="<?php echo $row['harga']; ?>">
+              <input type="hidden" name="stok" value="<?php echo $row['stok']; ?>">
+              <div 
+                  x-data="{ jumlah: 1, min: 1, max: <?php echo $row['stok']; ?> }"
+                  class="d-flex align-items-center"
+                >
+                  <!-- Tombol minus -->
+                  <button type="button" class="btn btn-sm btn-secondary me-1"
+                    @click="if(jumlah > min) jumlah--"
+                  >-</button>
+
+                  <!-- Input -->
+                  <input 
+                    type="number" 
+                    name="jumlah" 
+                    class="form-control form-control-sm me-1"
+                    style="width: 70px; background-color: rgba(237, 208, 140, 0.14); border: 1px solid rgba(255,255,255,0.3); color: white;"
+                    x-model="jumlah"
+                    :min="min"
+                    :max="max"
+                    required
+                  >
+
+                  <!-- Tombol plus -->
+                  <button type="button" class="btn btn-sm btn-secondary"
+                    @click="if(jumlah < max) jumlah++"
+                  >+</button>
+                </div>
+
+              <button type="submit" class="product-box-button " style="background-color: #C9AA7B; color: white; font-weight: bold;">Beli</button>
+            </form>
+          </div>
+        </div>
+        <?php } ?>
+    </div>
+  </div>
     </div>
   </div>
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-
-                </button>
-                <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Beranda</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="masuk.php">Masuk</a></li>
-                    <li><a href="daftar.php">Daftar</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-<br><br><br><br>
-    <div class="container">
-      
-        <div class="row">
-
-            <div class="col-md-9">
-                    
-              <div class="jumbotron">
-                  <h1> Bonbon Bakery and Cake <img src="assets/ico/barley.jpeg" width="15%" height="15%"></h1>
-                  <p>
-                    Belanja kue impian anda secara online, aman dan nyaman di Bonbon Bakery and Cake.
-                  </p><br><br><br>
-                  <p>
-                    <a href="#" onclick="$('#get').animatescroll({scrollSpeed:2000,easing:'easeOutBack'});" class="btn btn-primary btn-lg">Mulai</a>
-                  </p>
-                  <div id="get"></div>
-                </div><hr>
-              <div class="row">
-
-                <?php
-
-                    $page = (isset($_GET['page']))? $_GET['page'] : 1;
-                    $limit = 9;
-                    $limit_start = ($page - 1) * $limit;
-                    $sql1 = "select * from barang LIMIT $limit_start, $limit";
-                    $query1 = mysqli_query($connect,$sql1);
-                    $cek = mysqli_num_rows($query1);
-
-                    if($cek > 0){
-                        while ($row = mysqli_fetch_array($query1)){ 
-                ?>
-
-                    <div class="col-md-4 text-center col-sm-6">
-                        <div class="thumbnail">
-                            <img src="<?="images/product/$row[gambar]" ?>" width="50%" height="30%">
-                            <div class="caption">
-                                <h4><?php echo ucwords("$row[nama_barang]"); ?> <span class="badge"><?php echo "$row[stok]"; ?></span></h4>
-                                <p style="color: red;">Rp. <?= number_format("$row[harga]") ?> </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                <?php 
-                    } // end while
-                }else{ 
-                    ?>
-
-                    <center><img src="assets/ico/kosong.png"><h2>Barang Tidak Tersedia!!</h2></center>
-                <?php } ?>
-                </div>
-
-            <center>
-                
-                <div class="row">
-                    <ul class="pagination">
-                    
-                    <?php
-                    // Buat query untuk menghitung semua jumlah data
-                    $q2 = "select * from barang";
-                    $sql2 = mysqli_query($connect, $q2); // Eksekusi querynya
-                    $get_jumlah = mysqli_num_rows($sql2);
-                    
-                    $jumlah_page = ceil($get_jumlah / $limit); // Hitung jumlah halamannya
-                    $jumlah_number = 3; // Tentukan jumlah link number sebelum dan sesudah page yang aktif
-                    $start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number
-                    $end_number = ($page < ($jumlah_page - $jumlah_number))? $page + $jumlah_number : $jumlah_page; // Untuk akhir link number
-                    
-                    for($i = $start_number; $i <= $end_number; $i++){
-                      $link_active = ($page == $i)? ' class="active"' : '';
-                    ?>
-                      <li<?php echo $link_active; ?>><a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                    <?php
-                    }
-                   ?>
-                    </ul>
-                </div>
-                <!-- /.row -->
-            </center>
-            <!-- /.col -->
-        </div>
-
-            <div class="col-md-3">
-                <div>
-                    <a class="list-group-item active ">Pencarian
-                    </a>
-                    <ul class="list-group">
-
-                        <li class="list-group-item">
-                            <form  action="search.php" method="POST">
-                                <div class="col-md-9">
-                                <input type="text" name="cari" class="form-control" placeholder="Telusuri.."><br>
-                                </div>
-                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.div -->
-                <div>
-                    <a class="list-group-item active">Kategori
-                    </a>
-                    <ul class="list-group">
-                        <?php
-                        include "conf/connection.php";
-                        $sql = "select * from kategori";
-                        $query = mysqli_query($connect,$sql);
-                        while ($data = mysqli_fetch_array($query)){ ?>
-                            <li class="list-group-item"><a href="kategori.php?kategori=<?php echo "$data[id_kategori]"; ?>"><?php echo "$data[kategori]"; ?></a></li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <!-- /.div -->
-                <div>
-                    <a class="list-group-item active">Tentang
-                    </a>
-                    <ul class="list-group">
-                            <li class="list-group-item"><a href="pusat-bantuan.php">Pusat Bantuan</a></li>
-                            <li class="list-group-item"><a href="maps.php">Maps</a></li>
-                            <li class="list-group-item"><a href="panduan-pengguna.php">Panduan Pengguna</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <a class="list-group-item active">Produk Baru
-                    </a>
-                    <ul class="list-group">
-                        <?php
-                            $a = "select * from barang order by id_barang desc limit 2";
-                            $b = mysqli_query($connect,$a);
-                            while ($c = mysqli_fetch_array($b)){ ?>
-                            <li class="list-group-item">
-                                <div class="thumbnaill">
-                                    <div class="captionn">
-                                        <h4><?php echo "$c[nama_barang]"; ?> <span class="badge"><?php echo "$c[stok]"; ?></span></h4>
-                                        <p>Rp. <?php echo "$c[harga]" ?> </p>
-                                    </div>
-                                    <center><img src="<?php echo "images/product/$c[gambar]"; ?>" width="70%" height="40%"/></center>
-                                </div>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <!-- /.div -->
-              
-            </div>
-            <!-- /.col -->
-
-            </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->        
     
 <?php include "resources/footers.php"; ?>
 
