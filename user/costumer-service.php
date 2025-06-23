@@ -6,7 +6,7 @@ $nama = $_SESSION['nama'];
 $id = $_SESSION['id'];
 if($_SESSION['hak'] == 'pengguna'){}else{ ?> <script> alert('Anda Bukan Pengguna!'); window.location.href='../logout.php' </script> <?php }
 include "../conf/connection.php";
-?>
+ ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -57,28 +57,28 @@ include "../conf/connection.php";
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h2 class="section-title">Layanan Pelanggan <img src="../assets/ico/cs.png" width="40" height="40"></h2>
-      <?php 
-      error_reporting(0);
+ <?php 
+error_reporting(0);
       $simpan = $_POST['simpan'];
-      ?>
+  ?>
       <div class="form-box">
-        <form method="post" action="costumer-service.php">
+            <form method="post" action="costumer-service.php">
           <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
             <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama ..." required>
-          </div>
-          <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
             <label for="email" class="form-label">Alamat Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan alamat email ..." required>
-          </div>
-          <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
             <label for="keluhan" class="form-label">Keluhan yang Dialami</label>
             <textarea class="form-control" id="keluhan" name="keluhan" rows="3" placeholder="Tuliskan keluhan yang dialami ..." required></textarea>
-          </div>
+                  </div>
           <div class="mb-3">
             <label for="notelp" class="form-label">No. Telp Aktif</label>
             <input type="text" class="form-control" id="notelp" name="notelp" placeholder="Masukkan No. HP ..." required>
-          </div>
+                  </div>
           <div class="text-end">
             <button type="submit" name="simpan" class="btn btn-kirim">Kirim</button>
             <a href="home.php" class="btn btn-secondary ms-2">Kembali</a>
@@ -86,14 +86,14 @@ include "../conf/connection.php";
         </form>
       </div>
       <?php if ($simpan) { ?>
-        <script type="text/javascript">
-          alert ("Data Berhasil Disimpan, Terimakasih Telah Mengisi Form Layanan Pelanggan Barley Bakery And Cake. Kami akan mengirimkan respon ke alamat email yang telah dimasukkan");
-          window.location.href="costumer-service.php";
-        </script>
+      <script type="text/javascript">
+        alert ("Data Berhasil Disimpan, Terimakasih Telah Mengisi Form Layanan Pelanggan Barley Bakery And Cake. Kami akan mengirimkan respon ke alamat email yang telah dimasukkan");
+        window.location.href="costumer-service.php";
+      </script>
       <?php } ?>
-    </div>
-  </div>
-</div>
+            </div>
+        </div>
+          </div>
 <?php include "footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

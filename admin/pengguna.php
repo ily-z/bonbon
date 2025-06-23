@@ -9,93 +9,78 @@ include "../conf/connection.php";
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bonbon Bakery and Cake </title>
-    <link href="../assets/ico/barley.jpeg" rel="shorcut icon">
-    <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-    <!-- Datatables core CSS -->
-    <link href="../assets/css/datatables.css" rel="stylesheet">
-     <!-- custom CSS here -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Data Pengguna | Bonbon Bakery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/ico/barley.png" rel="shortcut icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3e3cd;
+            font-family: 'Sora', sans-serif;
+        }
+        .table thead {
+            background-color: #c9aa7b;
+            color: #000;
+        }
+        .btn-status {
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #1f1f1f;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <span class="navbar-brand">Bonbon Bakery and Cake<span class="glyphicon glyphicon-shopping-cart"></span></span>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="home.php">Beranda</a></li>
-                    <li class="active"><a href="pengguna.php">Pengguna</a></li>
-                    <li><a href="kategori.php">Kategori</a></li>
-                    <li><a href="barang.php">Barang</a></li>
-                    <li><a href="report.php">Laporan</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="profil.php"><?php echo ucwords("$nama"); ?></a></li>
-                    <li><a href="../logout.php">Keluar</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-<div class="container">
-   <br><br>
-   <div class="page-header">
-   	<h2> Data Pengguna </h2>
-   </div>
-   <table id="tables" class="table table-responsive table-bordered table-striped">
-   	<thead>
-   		<tr>
-   			<th style="text-align: center;"> Nama </th>
-   			<th style="text-align: center;"> Jenis Kelamin </th>
-   			<th style="text-align: center;"> Tanggal Lahir </th>
-   			<th style="text-align: center;"> status </th>
-   		</tr>
-   	</thead>
-   	<?php
-   		$sql = "select * from pengguna ";
-   		$query = mysqli_query($connect, $sql);
-   		while ($data = mysqli_fetch_array($query)){ ?>
-   			<tr>
-   				<td><?php echo ucwords("$data[nama]"); ?></td>
-   				<td><?php echo ucwords("$data[jenis_kelamin]"); ?></td>
-   				<td><?php echo ucwords("$data[tgl_lahir]"); ?></td>
-   				<td><?php echo ucwords("$data[hak]"); ?></td>
-  			</tr>
-   		<?php }
-   	?>
-   </table>
+<?php include "navbar.php"; ?>
+<div class="container mt-5">
+  <h2 class="text-center fw-bold mb-4"><i class="bi bi-people"></i> Data Pengguna</h2>
+  <div class="table-responsive">
+    <table id="tables" class="table table-bordered table-striped align-middle">
+      <thead class="text-center">
+        <tr>
+          <th>Nama</th>
+          <th>Jenis Kelamin</th>
+          <th>Tanggal Lahir</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $sql = "select * from pengguna ";
+        $query = mysqli_query($connect, $sql);
+        while ($data = mysqli_fetch_array($query)){ ?>
+          <tr>
+            <td><?php echo ucwords("$data[nama]"); ?></td>
+            <td><?php echo ucwords("$data[jenis_kelamin]"); ?></td>
+            <td><?php echo ucwords("$data[tgl_lahir]"); ?></td>
+            <td><?php echo ucwords("$data[hak]"); ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 </div>
 
+<!-- Footer -->
+<div class="footer">
+  &copy; 2025 Bonbon Bakery and Cake. Hak Cipta Dilindungi
+</div>
 
-
-    <!--Footer -->
-    <div class="col-md-12 end-box ">
-         &copy; 2021 | All Rights Reserved | Bonbon Bakery and Cake
-    </div>
-    <!-- /.col -->
-    <!--Footer end -->
-    <!--jQUERY FILES-->
-    <script src="../assets/js/jquery-1.10.2.js"></script>
-    <!--BOOTSTRAP  FILES-->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/datatables.js"></script>
-    <script>
-        $(document).ready(function () {
-          $('#tables').DataTable();
-          $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+      $('#tables').DataTable();
+    });
+</script>
 </body>
 </html>
