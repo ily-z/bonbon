@@ -52,5 +52,5 @@ if (mysqli_num_rows($cek_keranjang) > 0) {
 $sisa_stok = $stok_sekarang - $jumlah_baru;
 $update_stok = mysqli_query($connect, "UPDATE barang SET stok = '$sisa_stok' WHERE id_barang = '$id_barang'");
 
-echo "<script>alert('Barang berhasil dimasukkan ke keranjang'); window.location.href='keranjang.php';</script>";
+echo "<script>alert('Barang berhasil dimasukkan ke keranjang'); window.location.href='home.php';</script>";
 ?>
