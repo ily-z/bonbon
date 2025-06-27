@@ -19,12 +19,6 @@ include "../conf/connection.php";
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&family=Sora&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Sora', sans-serif;
-      background-color: #f3e3cd;
-      margin: 0;
-      padding: 0;
-    }
     .navbar {
       background-color: #C9AA7B;
     }

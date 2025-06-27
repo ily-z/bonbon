@@ -214,7 +214,7 @@ include "../conf/connection.php";
               <?php echo $status_text; ?>
             </span>
           </div>
-          <div class="col-md-3 text-end">
+          <div class="col-md-3 d-flex justify-content-center">
             <a href="detail.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">
               <i class="bi bi-eye"></i> Detail Barang
             </a>

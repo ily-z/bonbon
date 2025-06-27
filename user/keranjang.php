@@ -108,6 +108,29 @@ include "../conf/connection.php";
       padding: 8px 30px;
     }
 
+    .btn-select-all {
+      background-color: #AD8D5C;
+      color: white;
+      border-radius: 15px;
+      font-weight: bold;
+      padding: 6px 15px;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .btn-deselect-all {
+      background-color: #C9AA7B;
+      color: white;
+      border-radius: 15px;
+      font-weight: bold;
+      padding: 6px 15px;
+      border: none;
+    }
+
+    .form-check-input {
+      cursor: pointer;
+    }
+
     /* Overlay Checkout */
     .checkout-overlay {
       position: fixed;
@@ -158,22 +181,136 @@ include "../conf/connection.php";
       color: white;
       border: none;
     }
+
+    /* Tombol jumlah (plus/minus) */
+    .btn-qty {
+      background: linear-gradient(135deg, #C9AA7B, #AD8D5C);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+      margin: 0 4px;
+    }
+    .btn-qty:hover, .btn-qty:focus {
+      background: linear-gradient(135deg, #AD8D5C, #8B7355);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    /* Tombol hapus item */
+    .btn-remove {
+      background: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+      margin: 0 auto;
+    }
+    .btn-remove:hover, .btn-remove:focus {
+      background: #c82333;
+      color: #fff;
+      outline: none;
+    }
+    /* Tombol utama */
+    .btn-main {
+      background: linear-gradient(135deg, #C9AA7B, #AD8D5C);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 10px 28px;
+      margin: 0 8px 0 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-main:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-main:hover, .btn-main:focus {
+      background: linear-gradient(135deg, #AD8D5C, #8B7355);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    .btn-danger-main {
+      background: linear-gradient(135deg, #ff6b6b, #c82333);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 10px 28px;
+      margin: 0 8px 0 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-danger-main:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-danger-main:hover, .btn-danger-main:focus {
+      background: linear-gradient(135deg, #c82333, #a71d2a);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    .cart-qty input {
+      width: 40px;
+      text-align: center;
+      border: 1px solid #C9AA7B;
+      background: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 0 4px;
+    }
+    .mb-3.d-flex.gap-2 > button {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
 <div class="wrapper">
 <?php include "navbar.php"; ?>
+<?php include "toast.php"; ?>
 
 <div class="container mt-4 mb-5 content">
   <h2 class="cart-title">Keranjang <i class="bi bi-basket-fill"></i></h2>
 
   <div class="cart-table">
     <div class="cart-header row text-center">
-      <div class="col-md-3">Produk</div>
+      <div class="col-md-1">Pilih</div>
+      <div class="col-md-2">Produk</div>
       <div class="col-md-3">Harga</div>
       <div class="col-md-3">Jumlah</div>
       <div class="col-md-2">Total</div>
       <div class="col-md-1"></div>
+    </div>
+    <div class="mb-3 d-flex gap-2">
+      <button type="button" class="btn-main" onclick="selectAll()"><i class="bi bi-check2-square"></i> Pilih Semua</button>
+      <button type="button" class="btn-main" onclick="deselectAll()"><i class="bi bi-x-square"></i> Hapus Pilihan</button>
+      <button type="button" class="btn-danger-main" onclick="deleteSelected()" id="deleteBtn" disabled><i class="bi bi-trash"></i> Hapus Item Terpilih</button>
     </div>
     <form method="POST" action="checkout.php" id="checkoutForm">
     <?php 
@@ -185,32 +322,31 @@ include "../conf/connection.php";
       if (mysqli_num_rows($query) > 0) {
         while($data = mysqli_fetch_array($query)) {
           $total_semua += $data['total'];
-          echo "<input type='hidden' name='id_keranjang[]' value='{$data['id_keranjang']}'>";
     ?>
     <div class="cart-row">
-      <div class="cart-item col-md-3">
+      <div class="col-md-1 text-center">
+        <input type="checkbox" name="selected_items[]" value="<?php echo $data['id_keranjang']; ?>" 
+               class="form-check-input" style="transform: scale(1.2);" onchange="updateTotal()">
+      </div>
+      <div class="cart-item col-md-2">
         <img src="../images/product/<?php echo $data['gambar']; ?>" alt="produk">
         <div><?php echo ucwords($data['nama_barang']); ?></div>
       </div>
       <div class="col-md-3 text-center">Rp.<?php echo number_format($data['harga_barang']); ?></div>
       <div class="col-md-3 cart-qty text-center">
-        <?php if ($data['jumlah_beli'] > 1) { ?>
-          <a href="kurangi-keranjang.php?id=<?php echo $data['id_keranjang']; ?>"><button type="button">-</button></a>
-        <?php } else { ?>
-          <a href="hapus-keranjang.php?id=<?php echo $data['id_keranjang']; ?>" onclick="return confirm('Jumlah hanya 1. Hapus barang dari keranjang?')"><button type="button">-</button></a>
-        <?php } ?>
+        <button type="button" class="btn-qty" onclick="kurangiJumlah(<?php echo $data['id_keranjang']; ?>, <?php echo $data['jumlah_beli']; ?>)">-</button>
         <input type="text" value="<?php echo $data['jumlah_beli']; ?>" disabled>
-        <a href="tambah-keranjang.php?id=<?php echo $data['id_keranjang']; ?>"><button type="button">+</button></a>
+        <a href="tambah-keranjang.php?id=<?php echo $data['id_keranjang']; ?>"><button type="button" class="btn-qty">+</button></a>
       </div>
       <div class="col-md-2 text-center">Rp.<?php echo number_format($data['total']); ?></div>
       <div class="col-md-1 text-center">
-        <a href="hapus-keranjang.php?id=<?php echo $data['id_keranjang']; ?>" class="remove-btn"><i class="bi bi-trash-fill"></i></a>
+        <a href="hapus-keranjang.php?id=<?php echo $data['id_keranjang']; ?>" class="btn-remove"><i class="bi bi-trash-fill"></i></a>
       </div>
     </div>
     <?php } ?>
-    <div class="cart-total">Total: <strong>Rp.<?php echo number_format($total_semua); ?></strong></div>
+    <div class="cart-total">Total: <strong>Rp.<span id="selectedTotal">0</span></strong></div>
     <div class="text-end mt-3">
-      <button type="button" class="btn btn-checkout" onclick="toggleCheckout(true)">Pesan</button>
+      <button type="button" class="btn-main" onclick="checkoutSelected()" id="checkoutBtn" disabled><i class="bi bi-bag-check"></i> Pesan Item Terpilih</button>
     </div>
     <?php } else { ?>
       <div class="text-center">
@@ -247,6 +383,122 @@ include "../conf/connection.php";
 function toggleCheckout(show) {
   const overlay = document.getElementById('checkoutOverlay');
   overlay.style.display = show ? 'flex' : 'none';
+}
+
+function updateTotal() {
+  const checkboxes = document.querySelectorAll('input[name="selected_items[]"]:checked');
+  const totalSpan = document.getElementById('selectedTotal');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
+  
+  let total = 0;
+  checkboxes.forEach(checkbox => {
+    const row = checkbox.closest('.cart-row');
+    const totalCell = row.querySelector('.col-md-2.text-center');
+    const totalText = totalCell.textContent.replace('Rp.', '').replace(/,/g, '');
+    total += parseInt(totalText);
+  });
+  
+  totalSpan.textContent = total.toLocaleString('id-ID');
+  checkoutBtn.disabled = checkboxes.length === 0;
+  deleteBtn.disabled = checkboxes.length === 0;
+}
+
+function checkoutSelected() {
+  const checkboxes = document.querySelectorAll('input[name="selected_items[]"]:checked');
+  if (checkboxes.length === 0) {
+    alert('Pilih minimal satu item untuk checkout');
+    return;
+  }
+  
+  // Buat form untuk checkout item yang dipilih
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'checkout-selected.php';
+  
+  checkboxes.forEach(checkbox => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'selected_items[]';
+    input.value = checkbox.value;
+    form.appendChild(input);
+  });
+  
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function selectAll() {
+  const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.checked = true;
+  });
+  updateTotal();
+}
+
+function deselectAll() {
+  const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.checked = false;
+  });
+  updateTotal();
+}
+
+function deleteSelected() {
+  const checkboxes = document.querySelectorAll('input[name="selected_items[]"]:checked');
+  if (checkboxes.length === 0) {
+    alert('Pilih minimal satu item untuk dihapus');
+    return;
+  }
+  
+  if (confirm('Apakah Anda yakin ingin menghapus item yang dipilih?')) {
+    // Buat form untuk menghapus item yang dipilih
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'hapus-item-terpilih.php';
+    
+    checkboxes.forEach(checkbox => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'selected_items[]';
+      input.value = checkbox.value;
+      form.appendChild(input);
+    });
+    
+    document.body.appendChild(form);
+    form.submit();
+  }
+}
+
+function kurangiJumlah(id_keranjang, jumlah_beli) {
+  if (jumlah_beli > 1) {
+    // Jika jumlah > 1, langsung kurangi
+    if (confirm('Apakah Anda yakin ingin mengurangi jumlah barang?')) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'kurangi-keranjang.php';
+      
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'id_keranjang';
+      input.value = id_keranjang;
+      form.appendChild(input);
+
+      const input2 = document.createElement('input');
+      input2.type = 'hidden';
+      input2.name = 'jumlah_beli';
+      input2.value = jumlah_beli - 1;
+      form.appendChild(input2);
+      
+      document.body.appendChild(form);
+      form.submit();
+    }
+  } else {
+    // Jika jumlah = 1, konfirmasi hapus
+    if (confirm('Jumlah hanya 1. Hapus barang dari keranjang?')) {
+      window.location.href = 'hapus-keranjang.php?id=' + id_keranjang;
+    }
+  }
 }
 </script>
 </body>

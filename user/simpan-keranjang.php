@@ -22,7 +22,8 @@ $data_stok = mysqli_fetch_assoc($cek_stok);
 $stok_sekarang = (int)$data_stok['stok'];
 
 if ($stok_sekarang < $jumlah_baru) {
-    echo "<script> alert('Maaf, stok tidak mencukupi'); window.location.href='home.php'; </script>";
+    $_SESSION['toast'] = ['msg' => 'Maaf, stok tidak mencukupi', 'type' => 'error'];
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'home.php'));
     exit;
 }
 
@@ -35,22 +36,29 @@ if (mysqli_num_rows($cek_keranjang) > 0) {
     $jumlah_lama = (int)$row['jumlah_beli'];
     $jumlah_total = $jumlah_lama + $jumlah_baru;
     $total = $jumlah_total * $harga;
-
-    // Update jumlah di keranjang
     $update = mysqli_query($connect, "UPDATE keranjang 
         SET jumlah_beli = '$jumlah_total', total = '$total', waktu = NOW() 
         WHERE id_keranjang = '{$row['id_keranjang']}'");
-
+    $berhasil = $update;
 } else {
     $total = $jumlah_baru * $harga;
     $insert = mysqli_query($connect, "INSERT INTO keranjang 
         (harga_barang, jumlah_beli, status, total, id_barang, id_pengguna, waktu) 
         VALUES ('$harga', '$jumlah_baru', 'belum bayar', '$total', '$id_barang', '$id_pengguna', NOW())");
+    $berhasil = $insert;
 }
 
 // Update stok barang
 $sisa_stok = $stok_sekarang - $jumlah_baru;
 $update_stok = mysqli_query($connect, "UPDATE barang SET stok = '$sisa_stok' WHERE id_barang = '$id_barang'");
 
-echo "<script>alert('Barang berhasil dimasukkan ke keranjang'); window.location.href='home.php';</script>";
+if ($berhasil && $update_stok) {
+    $_SESSION['toast'] = ['msg' => 'Berhasil menambah ke keranjang!', 'type' => 'success'];
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'home.php'));
+    exit;
+} else {
+    $_SESSION['toast'] = ['msg' => 'Gagal menambah ke keranjang!', 'type' => 'error'];
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'home.php'));
+    exit;
+}
 ?>

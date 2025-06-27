@@ -119,12 +119,9 @@ $no_hp = $dataTrans['no_hp'];
 
   <div class="row justify-content-center">
     <?php
-    $sql = "SELECT * FROM barang 
-            INNER JOIN keranjang ON barang.id_barang = keranjang.id_barang 
-            WHERE keranjang.id_transaksi = '$id_transaksi'";
+    $sql = "SELECT * FROM detail_transaksi WHERE id_transaksi = '$id_transaksi'";
     $query = mysqli_query($connect, $sql);
     $produk = [];
-
     while($data = mysqli_fetch_array($query)) {
       $idb = $data['id_barang'];
       if(!isset($produk[$idb])) {
@@ -133,13 +130,12 @@ $no_hp = $dataTrans['no_hp'];
           'nama_barang' => $data['nama_barang'],
           'gambar' => $data['gambar'],
           'harga' => $data['harga'],
-          'jumlah' => $data['jumlah_beli'],
+          'jumlah' => $data['jumlah'],
         ];
       } else {
-        $produk[$idb]['jumlah'] += $data['jumlah_beli'];
+        $produk[$idb]['jumlah'] += $data['jumlah'];
       }
     }
-
     foreach($produk as $item): ?>
       <div class="col-6 col-md-3 col-sm-4 d-flex">
         <div class="product-box w-100">
