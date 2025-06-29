@@ -164,80 +164,82 @@ include "../conf/connection.php";
 <body>
 <div class="wrapper">
   <?php include "navbar.php"; ?>
+    <div class="coba-blur">
 
-  <div class="container mt-4 mb-5 content">
-    <h2 class="shipping-title">Barang Yang Dikirim <i class="bi bi-truck"></i></h2>
-
-    <?php
-    $sql = "SELECT * FROM pengguna 
-            INNER JOIN transaksi ON pengguna.id_pengguna = transaksi.id_pengguna
-            WHERE pengguna.id_pengguna='$id' AND transaksi.status_transaksi LIKE '%kirim%'
-            ORDER BY waktu_transaksi DESC";
-    $query = mysqli_query($connect, $sql);
-    if (mysqli_num_rows($query) > 0) {
-    ?>
-    <div class="shipping-table">
-      <div class="table-header">
-        <div class="row">
-          <div class="col-md-2">Tanggal</div>
-          <div class="col-md-3">Alamat</div>
-          <div class="col-md-2">No Telp</div>
-          <div class="col-md-2">Status</div>
-          <div class="col-md-3">Aksi</div>
-        </div>
-      </div>
-
-      <?php
-      while($data = mysqli_fetch_array($query)) {
-        $status = $data['status_transaksi'];
-        $status_class = '';
-        $status_text = '';
-        
-        if ($status == "proses kirim") {
-          $status_class = 'status-proses';
-          $status_text = 'Proses';
-        } else if ($status == "dikirim") {
-          $status_class = 'status-dikirim';
-          $status_text = 'Dikirim';
-        } else if ($status == "selesai") {
-          $status_class = 'status-selesai';
-          $status_text = 'Selesai';
-        }
-      ?>
-      <div class="shipping-row">
-        <div class="row align-items-center">
-          <div class="col-md-2"><?php echo date("d-m-Y", strtotime($data['waktu_transaksi'])); ?></div>
-          <div class="col-md-3"><?php echo ucwords($data['alamat']); ?></div>
-          <div class="col-md-2"><?php echo $data['no_hp']; ?></div>
-          <div class="col-md-2 d-flex justify-content-center">
-            <span class="status-badge <?php echo $status_class; ?>">
-              <?php echo $status_text; ?>
-            </span>
+      <div class="container mt-4 mb-5 content">
+        <h2 class="shipping-title">Barang Yang Dikirim <i class="bi bi-truck"></i></h2>
+    
+        <?php
+        $sql = "SELECT * FROM pengguna 
+                INNER JOIN transaksi ON pengguna.id_pengguna = transaksi.id_pengguna
+                WHERE pengguna.id_pengguna='$id' AND transaksi.status_transaksi LIKE '%kirim%'
+                ORDER BY waktu_transaksi DESC";
+        $query = mysqli_query($connect, $sql);
+        if (mysqli_num_rows($query) > 0) {
+        ?>
+        <div class="shipping-table">
+          <div class="table-header">
+            <div class="row">
+              <div class="col-md-2">Tanggal</div>
+              <div class="col-md-3">Alamat</div>
+              <div class="col-md-2">No Telp</div>
+              <div class="col-md-2">Status</div>
+              <div class="col-md-3">Aksi</div>
+            </div>
           </div>
-          <div class="col-md-3 d-flex justify-content-center">
-            <a href="detail.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">
-              <i class="bi bi-eye"></i> Detail Barang
-            </a>
-            <?php if($status == "dikirim"){ ?>
-              <a href="terima-barang.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-success rounded-pill px-3 ms-2">
-                <i class="bi bi-check-circle"></i> Terima
-              </a>
-            <?php } ?>
+    
+          <?php
+          while($data = mysqli_fetch_array($query)) {
+            $status = $data['status_transaksi'];
+            $status_class = '';
+            $status_text = '';
+            
+            if ($status == "proses kirim") {
+              $status_class = 'status-proses';
+              $status_text = 'Proses';
+            } else if ($status == "dikirim") {
+              $status_class = 'status-dikirim';
+              $status_text = 'Dikirim';
+            } else if ($status == "selesai") {
+              $status_class = 'status-selesai';
+              $status_text = 'Selesai';
+            }
+          ?>
+          <div class="shipping-row">
+            <div class="row align-items-center">
+              <div class="col-md-2"><?php echo date("d-m-Y", strtotime($data['waktu_transaksi'])); ?></div>
+              <div class="col-md-3"><?php echo ucwords($data['alamat']); ?></div>
+              <div class="col-md-2"><?php echo $data['no_hp']; ?></div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <span class="status-badge <?php echo $status_class; ?>">
+                  <?php echo $status_text; ?>
+                </span>
+              </div>
+              <div class="col-md-3 d-flex justify-content-center">
+                <a href="detail.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">
+                  <i class="bi bi-eye"></i> Detail Barang
+                </a>
+                <?php if($status == "dikirim"){ ?>
+                  <a href="terima-barang.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-success rounded-pill px-3 ms-2">
+                    <i class="bi bi-check-circle"></i> Terima
+                  </a>
+                <?php } ?>
+              </div>
+            </div>
           </div>
+          <?php } ?>
         </div>
+        <?php } else { ?>
+          <div class="text-center">
+            <img src="../assets/ico/keranjang.png" width="180">
+            <h3 class="mt-3">Belum Ada Barang Yang Dikirim</h3>
+          </div>
+        <?php } ?>
       </div>
-      <?php } ?>
+    
+      <?php include "footer.php"; ?>
     </div>
-    <?php } else { ?>
-      <div class="text-center">
-        <img src="../assets/ico/keranjang.png" width="180">
-        <h3 class="mt-3">Belum Ada Barang Yang Dikirim</h3>
-      </div>
-    <?php } ?>
-  </div>
-
-  <?php include "footer.php"; ?>
-</div>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

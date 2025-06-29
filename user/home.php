@@ -463,6 +463,7 @@ include "../conf/connection.php";
 <body>
 
 <?php include "navbar.php"; ?>
+<div class="coba-blur">
 
 <div class="container mt-4">
   <h2 class="text-center section-title" style="font-family: 'Sansita Swashed', cursive; font-size: 2rem; margin: 30px 0;">Spesial untuk Anda</h2>
@@ -581,6 +582,7 @@ include "../conf/connection.php";
 </div>
 
 <?php include "footer.php"; ?>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Loading state untuk tombol

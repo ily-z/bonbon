@@ -1,4 +1,4 @@
 <?php session_start();
 session_destroy();
 ?>
-<script> window.location.href='index.php' </script>
+<script> window.location.href='masuk.php' </script>

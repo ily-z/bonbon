@@ -71,106 +71,108 @@ $data = mysqli_fetch_array($query);
 <body>
 
 <?php include "navbar.php"; ?>
+<div class="coba-blur">
 
-<div class="container">
-  <h2 class="section-title"><i class="bi bi-person-fill"></i> Profil</h2>
-  <div class="row justify-content-center">
-    <div class="col-md-8 profile-box">
-      <form>
-        <div class="mb-2"><span class="badge bg-dark">Pengguna</span></div>
-
-        <?php if(!empty($data['nama'])) { ?>
-          <label class="form-label">Nama Lengkap</label>
-          <input type="text" class="form-control mb-2" value="<?= $data['nama']; ?>" readonly>
-        <?php } ?>
-
-        <?php if(!empty($data['username'])) { ?>
-          <label class="form-label">Nama Pengguna</label>
-          <input type="text" class="form-control mb-2" value="<?= $data['username']; ?>" readonly>
-        <?php } ?>
-
-        <?php if(!empty($data['jenis_kelamin'])) { ?>
-          <label class="form-label">Jenis Kelamin</label>
-          <input type="text" class="form-control mb-2" value="<?= $data['jenis_kelamin']; ?>" readonly>
-        <?php } ?>
-
-        <?php if(!empty($data['email'])) { ?>
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control mb-2" value="<?= $data['email']; ?>" readonly>
-        <?php } ?>
-
-        <?php if(!empty($data['tgl_lahir'])) { ?>
-          <label class="form-label">Tanggal Lahir</label>
-          <input type="text" class="form-control mb-2" value="<?= date("d F Y", strtotime($data['tgl_lahir'])); ?>" readonly>
-        <?php } ?>
-
-        <div class="mt-4 d-flex justify-content-between">
-          <div>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#edit" class="icon-action text-success"><i class="bi bi-pencil-square"></i></a>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#hapus" class="icon-action text-danger"><i class="bi bi-trash-fill"></i></a>
+  <div class="container">
+    <h2 class="section-title"><i class="bi bi-person-fill"></i> Profil</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8 profile-box">
+        <form>
+          <div class="mb-2"><span class="badge bg-dark">Pengguna</span></div>
+  
+          <?php if(!empty($data['nama'])) { ?>
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" class="form-control mb-2" value="<?= $data['nama']; ?>" readonly>
+          <?php } ?>
+  
+          <?php if(!empty($data['username'])) { ?>
+            <label class="form-label">Nama Pengguna</label>
+            <input type="text" class="form-control mb-2" value="<?= $data['username']; ?>" readonly>
+          <?php } ?>
+  
+          <?php if(!empty($data['jenis_kelamin'])) { ?>
+            <label class="form-label">Jenis Kelamin</label>
+            <input type="text" class="form-control mb-2" value="<?= $data['jenis_kelamin']; ?>" readonly>
+          <?php } ?>
+  
+          <?php if(!empty($data['email'])) { ?>
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control mb-2" value="<?= $data['email']; ?>" readonly>
+          <?php } ?>
+  
+          <?php if(!empty($data['tgl_lahir'])) { ?>
+            <label class="form-label">Tanggal Lahir</label>
+            <input type="text" class="form-control mb-2" value="<?= date("d F Y", strtotime($data['tgl_lahir'])); ?>" readonly>
+          <?php } ?>
+  
+          <div class="mt-4 d-flex justify-content-between">
+            <div>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#edit" class="icon-action text-success"><i class="bi bi-pencil-square"></i></a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#hapus" class="icon-action text-danger"><i class="bi bi-trash-fill"></i></a>
+            </div>
+            <a href="home.php" class="btn btn-secondary btn-sm">Kembali</a>
           </div>
-          <a href="home.php" class="btn btn-secondary btn-sm">Kembali</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Edit -->
+  <div class="modal fade" id="edit" tabindex="-1">
+    <div class="modal-dialog">
+      <form method="POST" action="edit-user.php" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ubah Profil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label>Nama</label>
+          <input type="text" class="form-control mb-2" name="nama" value="<?= $data['nama']; ?>" required>
+          <label>Jenis Kelamin</label>
+          <select class="form-control mb-2" name="jenis_kelamin">
+            <option><?= $data['jenis_kelamin']; ?></option>
+            <?php if($data['jenis_kelamin'] == 'Laki-laki') echo '<option>Perempuan</option>';
+                  else echo '<option>Laki-laki</option>'; ?>
+          </select>
+          <label>Tanggal Lahir</label>
+          <input type="date" class="form-control mb-2" name="tgl_lahir" value="<?= $data['tgl_lahir']; ?>" required>
+          <label>Nama Pengguna</label>
+          <input type="text" class="form-control mb-2" name="user" value="<?= $data['username']; ?>" required>
+          <label>Kata Sandi Lama</label>
+          <input type="password" class="form-control mb-2" name="pass_lama" required>
+          <label>Kata Sandi Baru</label>
+          <input type="password" class="form-control mb-2" name="pass_baru" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Simpan</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
         </div>
       </form>
     </div>
   </div>
-</div>
-
-<!-- Modal Edit -->
-<div class="modal fade" id="edit" tabindex="-1">
-  <div class="modal-dialog">
-    <form method="POST" action="edit-user.php" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Ubah Profil</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <label>Nama</label>
-        <input type="text" class="form-control mb-2" name="nama" value="<?= $data['nama']; ?>" required>
-        <label>Jenis Kelamin</label>
-        <select class="form-control mb-2" name="jenis_kelamin">
-          <option><?= $data['jenis_kelamin']; ?></option>
-          <?php if($data['jenis_kelamin'] == 'Laki-laki') echo '<option>Perempuan</option>';
-                else echo '<option>Laki-laki</option>'; ?>
-        </select>
-        <label>Tanggal Lahir</label>
-        <input type="date" class="form-control mb-2" name="tgl_lahir" value="<?= $data['tgl_lahir']; ?>" required>
-        <label>Nama Pengguna</label>
-        <input type="text" class="form-control mb-2" name="user" value="<?= $data['username']; ?>" required>
-        <label>Kata Sandi Lama</label>
-        <input type="password" class="form-control mb-2" name="pass_lama" required>
-        <label>Kata Sandi Baru</label>
-        <input type="password" class="form-control mb-2" name="pass_baru" required>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </form>
+  
+  <!-- Modal Hapus -->
+  <div class="modal fade" id="hapus" tabindex="-1">
+    <div class="modal-dialog">
+      <form method="POST" action="hapus-user.php" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Hapus Akun</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Masukkan password Anda untuk menghapus akun:</p>
+          <input type="password" class="form-control" name="pass" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
+      </form>
+    </div>
   </div>
+  
+  <?php include "footer.php"; ?>
 </div>
-
-<!-- Modal Hapus -->
-<div class="modal fade" id="hapus" tabindex="-1">
-  <div class="modal-dialog">
-    <form method="POST" action="hapus-user.php" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Hapus Akun</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <p>Masukkan password Anda untuk menghapus akun:</p>
-        <input type="password" class="form-control" name="pass" required>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-danger">Hapus</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<?php include "footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

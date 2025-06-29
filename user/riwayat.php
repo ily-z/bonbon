@@ -76,50 +76,52 @@ include "../conf/connection.php";
 <body>
 <div class="wrapper">
 <?php include "navbar.php"; ?>
+<div class="coba-blur">
 
-<div class="container mt-4 mb-5 content">
-  <h2 class="riwayat-title">Riwayat <i class="bi bi-clock-history"></i></h2>
-
-  <div class="riwayat-header">
-    <div style="width: 20%;">Tanggal</div>
-    <div style="width: 20%;">Alamat</div>
-    <div style="width: 20%;">No Telp</div>
-    <div style="width: 20%;">Total</div>
-    <div style="width: 20%; text-align: center;">Aksi</div>
-    <div style="width: 20%; text-align: center;">Cetak</div>
+  <div class="container mt-4 mb-5 content">
+    <h2 class="riwayat-title">Riwayat <i class="bi bi-clock-history"></i></h2>
+  
+    <div class="riwayat-header">
+      <div style="width: 20%;">Tanggal</div>
+      <div style="width: 20%;">Alamat</div>
+      <div style="width: 20%;">No Telp</div>
+      <div style="width: 20%;">Total</div>
+      <div style="width: 20%; text-align: center;">Aksi</div>
+      <div style="width: 20%; text-align: center;">Cetak</div>
+    </div>
+  
+    <?php
+      $sql = "SELECT * FROM pengguna 
+              INNER JOIN transaksi ON pengguna.id_pengguna = transaksi.id_pengguna
+              WHERE pengguna.id_pengguna='$id' AND transaksi.status_transaksi='lunas'
+              ORDER BY waktu_transaksi DESC";
+      $query = mysqli_query($connect, $sql);
+      if (mysqli_num_rows($query) > 0) {
+        while($data = mysqli_fetch_array($query)) {
+    ?>
+    <div class="riwayat-row">
+      <div style="width: 20%;"><?php echo date("d-m-Y", strtotime($data['waktu_transaksi'])); ?></div>
+      <div style="width: 20%;"><?php echo ucwords($data['alamat']); ?></div>
+      <div style="width: 20%;"><?php echo $data['no_hp']; ?></div>
+      <div style="width: 20%;">Rp.<?php echo number_format($data['subtotal']); ?></div>
+      <div style="width: 20%; text-align: center;">
+        <a href="detail-riwayat.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">Detail Barang</a>
+      </div>
+      <div style="width: 20%; text-align: center;">
+      <a href="print.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" target="_BLANK" class="btn-print"><i class="bi bi-printer-fill"></i></a>
+      </div>
+      
+    </div>
+    <?php }} else { ?>
+      <div class="no-data">
+        <img src="../assets/ico/keranjang.png" width="180"><br>
+        <h4 class="mt-3">Belum ada riwayat transaksi.</h4>
+      </div>
+    <?php } ?>
   </div>
-
-  <?php
-    $sql = "SELECT * FROM pengguna 
-            INNER JOIN transaksi ON pengguna.id_pengguna = transaksi.id_pengguna
-            WHERE pengguna.id_pengguna='$id' AND transaksi.status_transaksi='lunas'
-            ORDER BY waktu_transaksi DESC";
-    $query = mysqli_query($connect, $sql);
-    if (mysqli_num_rows($query) > 0) {
-      while($data = mysqli_fetch_array($query)) {
-  ?>
-  <div class="riwayat-row">
-    <div style="width: 20%;"><?php echo date("d-m-Y", strtotime($data['waktu_transaksi'])); ?></div>
-    <div style="width: 20%;"><?php echo ucwords($data['alamat']); ?></div>
-    <div style="width: 20%;"><?php echo $data['no_hp']; ?></div>
-    <div style="width: 20%;">Rp.<?php echo number_format($data['subtotal']); ?></div>
-    <div style="width: 20%; text-align: center;">
-      <a href="detail-riwayat.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" class="btn btn-detail">Detail Barang</a>
-    </div>
-    <div style="width: 20%; text-align: center;">
-    <a href="print.php?id_transaksi=<?php echo $data['id_transaksi']; ?>" target="_BLANK" class="btn-print"><i class="bi bi-printer-fill"></i></a>
-    </div>
-    
-  </div>
-  <?php }} else { ?>
-    <div class="no-data">
-      <img src="../assets/ico/keranjang.png" width="180"><br>
-      <h4 class="mt-3">Belum ada riwayat transaksi.</h4>
-    </div>
-  <?php } ?>
+  
+  <?php include "footer.php"; ?>
 </div>
-
-<?php include "footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

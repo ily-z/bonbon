@@ -75,7 +75,7 @@ $cart_item_unique = count($cart_items);
     max-width: 95vw;
     height: 100vh;
     background: #fff3e0;
-    box-shadow: -2px 0 16px rgba(0,0,0,0.12);
+    box-shadow: -2px 0 16px rgba(0,0,0,0.30);
     z-index: 2000;
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(.4,0,.2,1);
@@ -84,7 +84,17 @@ $cart_item_unique = count($cart_items);
     border-top-left-radius: 18px;
     border-bottom-left-radius: 18px;
   }
-  .cart-sidebar.open { transform: translateX(0); }
+  .cart-sidebar.open { 
+    transform: translateX(0); 
+ 
+  }
+
+  body:has(.cart-sidebar.open) .coba-blur {
+    filter: blur(7px);
+    transition: filter 0.3s ease;
+  
+ 
+  }
   .cart-sidebar-header {
     padding: 18px 20px 12px 20px;
     border-bottom: 1px solid #e0c9a6;
@@ -167,6 +177,10 @@ $cart_item_unique = count($cart_items);
   .cart-sidebar-item .btn-hapus:hover {
     background: #c82333;
     color: #fff;
+  }
+
+  .form-check-input {
+    accent-color: #e0c9a6;
   }
   .cart-sidebar-item .fw-bold.small.ms-2 {
     font-size: 0.98rem;
@@ -252,7 +266,7 @@ $cart_item_unique = count($cart_items);
   </div>
 </nav>
 
-<!-- Sidebar Keranjang (Mini Cart) -->
+<<!-- Sidebar Keranjang (Mini Cart) -->
 <div id="cartSidebar" class="cart-sidebar">
   <div class="cart-sidebar-header d-flex justify-content-between align-items-center">
     <span class="fw-bold">Keranjang</span>
@@ -262,6 +276,7 @@ $cart_item_unique = count($cart_items);
     <?php if (count($cart_items) > 0): ?>
       <?php foreach($cart_items as $item): ?>
         <div class="d-flex align-items-center mb-3 border-bottom pb-2 cart-sidebar-item" data-id="<?php echo $item['id_keranjang']; ?>">
+          <input type="checkbox" class="form-check-input me-2 item-checkbox" data-id="<?php echo $item['id_keranjang']; ?>" data-total="<?php echo $item['total']; ?>">
           <img src="../images/product/<?php echo htmlspecialchars($item['gambar']); ?>" alt="<?php echo htmlspecialchars($item['nama_barang']); ?>" width="48" height="48" style="object-fit:cover;border-radius:8px;">
           <div class="ms-2 flex-grow-1">
             <div class="fw-bold small"><?php echo htmlspecialchars($item['nama_barang']); ?></div>
@@ -283,11 +298,15 @@ $cart_item_unique = count($cart_items);
   <div class="cart-sidebar-footer p-3">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <span class="fw-bold">Total</span>
-      <span class="fw-bold">Rp<?php echo number_format($cart_total); ?></span>
+      <span class="fw-bold" id="selectedTotal">Rp0</span>
     </div>
-    <a href="checkout.php" class="btn btn-main w-100" <?php if($cart_total==0) echo 'disabled'; ?>>Bayar</a>
+    <form id="checkoutForm" method="POST" action="checkout.php">
+      <input type="hidden" name="selected_items" id="selectedItemsInput">
+      <button type="submit" id="checkoutBtn" class="btn btn-main w-100" disabled>Bayar</button>
+    </form>
   </div>
 </div>
+
 
 <!-- Toast/Notifikasi -->
 <div id="toastNotif" style="position:fixed;top:24px;right:24px;z-index:3000;min-width:220px;display:none;"></div>
@@ -299,6 +318,7 @@ function showToast(msg, type = 'success') {
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 1800);
 }
+
 function refreshSidebarCart(showMsg) {
   fetch('navbar.php?ajax_cart=1')
     .then(res => res.text())
@@ -310,7 +330,7 @@ function refreshSidebarCart(showMsg) {
       if(newBody) document.getElementById('cartSidebarBody').innerHTML = newBody.innerHTML;
       if(newFooter) document.querySelector('.cart-sidebar-footer').innerHTML = newFooter.innerHTML;
       updateSidebarCartEvents();
-      // Update badge
+      updateSelectedTotal(); // <- update total saat cart di-refresh
       const badge = document.getElementById('cart-badge');
       const newBadge = doc.getElementById('cart-badge');
       if(badge && newBadge) {
@@ -320,6 +340,7 @@ function refreshSidebarCart(showMsg) {
       if(showMsg) showToast(showMsg);
     });
 }
+
 function updateSidebarCartEvents() {
   document.querySelectorAll('.btn-plus').forEach(btn => {
     btn.onclick = function() {
@@ -337,6 +358,7 @@ function updateSidebarCartEvents() {
       .catch(()=>showToast('Gagal menambah', 'error'));
     };
   });
+
   document.querySelectorAll('.btn-minus').forEach(btn => {
     btn.onclick = function() {
       const id = this.getAttribute('data-id');
@@ -353,6 +375,7 @@ function updateSidebarCartEvents() {
       .catch(()=>showToast('Gagal mengurangi', 'error'));
     };
   });
+
   document.querySelectorAll('.btn-hapus').forEach(btn => {
     btn.onclick = function() {
       const id = this.getAttribute('data-id');
@@ -363,12 +386,38 @@ function updateSidebarCartEvents() {
       }
     };
   });
+
+  // Tambahan: checkbox per item
+  document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', updateSelectedTotal);
+  });
 }
+
+function updateSelectedTotal() {
+  const checkboxes = document.querySelectorAll('.item-checkbox');
+  const totalDisplay = document.getElementById('selectedTotal');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const selectedItemsInput = document.getElementById('selectedItemsInput');
+  let total = 0;
+  let selectedIds = [];
+
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      total += parseInt(checkbox.dataset.total);
+      selectedIds.push(checkbox.dataset.id);
+    }
+  });
+
+  if(totalDisplay) totalDisplay.textContent = 'Rp' + total.toLocaleString('id-ID');
+  if(checkoutBtn) checkoutBtn.disabled = selectedIds.length === 0;
+  if(selectedItemsInput) selectedItemsInput.value = selectedIds.join(',');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+  });
   var sidebar = document.getElementById('cartSidebar');
   var openBtn = document.getElementById('cartSidebarBtn');
   var closeBtn = document.getElementById('closeCartSidebar');
@@ -383,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function() {
       sidebar.classList.remove('open');
     });
   }
-  // Optional: klik di luar sidebar untuk menutup
   document.addEventListener('mousedown', function(e) {
     if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !openBtn.contains(e.target)) {
       sidebar.classList.remove('open');
@@ -395,7 +443,9 @@ document.addEventListener('DOMContentLoaded', function() {
     badge.textContent = count;
     badge.style.display = count > 0 ? 'inline-block' : 'none';
   }
+
   updateSidebarCartEvents();
+  updateSelectedTotal(); // <- Jalankan awal
 });
 </script>
 
